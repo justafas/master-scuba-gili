@@ -1,218 +1,306 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Master Scuba Dive Resort - Gili Air</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="is-preload homepage">
-		<div id="page-wrapper">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Scuba Dive Resort - Gili Air</title>
+    
+    <!-- Šriftai ir Ikonos -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Kintamieji: Duotone spalvos (Gali keisti atspalvius čia) */
+        :root {
+            --primary: #0090c5;
+            --text-light: #ffffff;
+            --duotone-top: rgba(0, 40, 80, 0.85);
+            --duotone-bottom: rgba(0, 110, 160, 0.75);
+        }
 
-			
-				<div id="banner-wrapper" style="padding: 120px 1px 10px 1px;">
-					<div class="container">
-						<div id="banner" class="box" style="
-							background-image: url('images/banner.jpg'); 
-							background-size: cover; 
-							background-position: center; 
-							min-height: 50vh; 
-							display: flex; 
-							align-items: center; 
-							justify-content: center; 
-							text-align: center; 
-							background-color: rgba(0, 0, 0, 0.2); 
-							background-blend-mode: overlay;
-							border-radius: 8px;">
-							<div>
-								
-								<h1 style="color: white; font-size: 3.5em; margin: 0 0 0.2em 0; line-height: 1.2;">Master Scuba Dive Resort</h1>
-								<p style="font-size: 1.5em; color: white; margin: 0; line-height: 1.5;">Gili Air</p>
-							</div>
-						</div>
-					</div>
-				</div>
+        /* Baziniai nustatymai (Panaikina visus tarpus) */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
+        body { background-color: #000; color: var(--text-light); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        
+        /* 0. Fiksuota viršutinė juosta */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 1000; padding: 12px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        /* Header Logo dalis su PADI nuotrauka */
+        .header-logo-container {
+            display: flex; align-items: center; gap: 12px;
+        }
+        .header-logo-container img {
+            height: 35px; width: auto; border-radius: 4px;
+        }
+        .header-logo-text { 
+            font-size: 1.1rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; 
+        }
+        
+        .header-btn {
+            background: var(--primary); padding: 8px 16px; 
+            border-radius: 4px; font-weight: 600; font-size: 0.9rem;
+        }
 
-			
-				<div id="logo-wrapper" style="text-align: center; padding: 1em 15px;">
-    <div class="container">
-        <!-- Pridėtas max-width: 100% ir height: auto -->
-        <img src="images/logo.png" alt="Master Scuba Dive Resort Logo" style="max-width: 100%; height: auto; max-height: 150px;" />
-    </div>
-</div>
+        /* Pagrindinė pilno ekrano sekcijos klasė */
+        .edge-section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex; flex-direction: column; 
+            justify-content: center; align-items: center;
+            text-align: center; padding: 80px 20px;
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+        }
 
-			
-				<div id="features-wrapper" style="padding-top: 3em;">
-					<div class="container">
-						
-						<div class="row aln-center">
-							
-							<div class="col-4 col-6-small col-12-medium">
-								<section class="box feature">
-									<a href="#dive-sites-wrapper" class="image featured"><img src="images/pic01.jpg" alt="Fun Dive" /></a>
-									<div class="inner">
-										<header>
-											<h2>Fun Dive</h2>
-										</header>
-										<p>There are more then 20 captivating dive sites around Gili Islands. 1 hour €26</p>
-									</div>
-								</section>
-							</div>
-							
-							<div class="col-4 col-6-small col-12-medium">
-								<section class="box feature">
-									<a href="#" class="image featured"><img src="images/pic02.jpg" alt="Discovery Scuba Diving" /></a>
-									<div class="inner">
-										<header>
-											<h2>Discovery Scuba Diving</h2>
-										</header>
-										<p>Half-day introductory scuba diving experience that allows you to learn the basics of scuba diving and explore the underwater world. 4 hours €48</p>
-									</div>
-								</section>
-							</div>
-							
-							<div class="col-4 col-6-small col-12-medium">
-								<section class="box feature">
-									<a href="#" class="image featured"><img src="images/pic03.jpg" alt="Open Water Diver" /></a>
-									<div class="inner">
-										<header>
-											<h2>Open Water Diver course</h2>
-										</header>
-										<p>First scuba certification level. A highly-trained PADI Instructor will teach you how to scuba dive in a relaxed, supportive learning environment. 3 days €292</p>
-									</div>
-								</section>
-							</div>
+        /* 1. Hero / Logo per vidurį */
+        .section-hero {
+            background-image: linear-gradient(rgba(240, 235, 235, 0.25), rgba(0,0,0,0.4)), url('images/banner.jpg');
+        }
+        .section-hero img { max-width: 90%; max-height: 200px; width: auto; margin-bottom: 25px; }
+        .section-hero h1 { font-size: 2.4rem; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2; margin-bottom: 5px; }
+        .hero-subtitle { font-size: 1.3rem; letter-spacing: 2px; font-weight: 400; color: #ddd; text-transform: uppercase;}
 
-							<div class="col-4 col-6-small col-12-medium">
-								<section class="box feature">
-									<a href="#" class="image featured"><img src="images/pic04.jpg" alt="Advanced Open Water" /></a>
-									<div class="inner">
-										<header>
-											<h2>Advanced Open Water Diver course</h2>
-										</header>
-										<p>Excellent opportunity to explore breathtaking dive sites, learn new skills, and advance to the next level of scuba diving. 2 days €195</p>
-									</div>
-								</section>
-							</div>
+        /* 2. Intro Duotone */
+        .section-intro {
+            background-image: linear-gradient(var(--duotone-top), var(--duotone-bottom)), url('images/pic01.jpg');
+            min-height: 70vh;
+        }
+        .intro-text { max-width: 800px; font-size: 1.3rem; line-height: 1.6; font-weight: 400; }
+        .intro-text h2 { font-size: 2.2rem; margin-bottom: 20px; font-weight: 800; text-transform: uppercase; }
 
-							<div class="col-4 col-6-small col-12-medium">
-								<section class="box feature">
-									<a href="#" class="image featured"><img src="images/pic05.jpg" alt="Rescue Diver" /></a>
-									<div class="inner">
-										<header>
-											<h2>Rescue Diver Course</h2>
-										</header>
-										<p>Course teaches you how to prevent and manage problems in the water. You'll become a more confident diver and a better dive buddy.</p>
-									</div>
-								</section>
-							</div>
+        /* 3. Paslaugų 2x3 Tinklelis */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+        }
+        @media(min-width: 768px) {
+            .services-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .service-square {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            background-size: cover; background-position: center;
+            overflow: hidden;
+        }
+        .service-title {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+            padding: 40px 10px 15px; text-align: center;
+            display: flex; flex-direction: column; gap: 4px;
+        }
+        .service-title h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; line-height: 1.2; }
+        .service-title span { font-size: 0.8rem; color: #ccc; font-weight: 600; }
 
-						</div>
-					</div>
-				</div>
+        /* 4. Private Course Duotone */
+        .section-private {
+            background-image: linear-gradient(var(--duotone-bottom), var(--duotone-top)), url('images/pic02.jpg');
+            min-height: 60vh;
+        }
 
-			
-				<div id="dive-sites-wrapper" style="padding: 3em 0; background-color: #ffffff;">
-					<div class="container" style="text-align: center;">
-						<h2 style="margin-bottom: 1.5em; font-size: 2.25em;">Diving Sites</h2>
-						
-						
-						<ul style="
-							list-style: none; 
-							padding: 0; 
-							margin: 0; 
-							display: grid; 
-							grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-							gap: 15px; 
-							text-align: left;
-						">
-							
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">1. Turtle Heaven</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">2. Shark Point</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">3. Halik Reef</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">4. Deep Turbo</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">5. Shallow Turbo</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">6. Han's Reef</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">7. Meno Wall</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">8. Bounty Wreck</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">9. Air Slope</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">10. Sunset Reef</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">11. Harbor</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">12. Secret Reef</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">13. Good Heart Reef</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">14. Taket Malang</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">15. Air Wall</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">16. Bongkas Air</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">17. Simone Reef</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">18. Bongkas Meno</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">19. Meno Slope</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">20. Biorock</li>
-							<li style="background: #f7f7f7; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #0090c5; font-weight: 600;">21. Glen Nusa</li>
-						</ul>
-					</div>
-				</div>
+        /* 5. Diving Sites - Su minimalistinėmis kortelėmis */
+        .section-sites {
+            /* Sumažintas tamsinimas - nuotrauka bus ryškesnė */
+            background-image: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.4)), url('images/pic03.jpg');
+            min-height: auto; padding-top: 100px; padding-bottom: 100px;
+        }
+        .section-sites h2 { 
+            font-size: 2.5rem; margin-bottom: 40px; font-weight: 800; 
+            text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+        }
+        
+        .sites-list {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+            width: 100%; max-width: 950px;
+        }
+        @media(min-width: 768px) { .sites-list { grid-template-columns: repeat(3, 1fr); } }
+        @media(min-width: 1024px) { .sites-list { grid-template-columns: repeat(4, 1fr); } }
+        
+        /* Kortelės stilius */
+        .site-card {
+            background: rgba(255, 255, 255, 0.92); /* Beveik balta, šiek tiek permatoma */
+            color: #222;
+            padding: 14px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: left;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+            display: flex; align-items: center;
+        }
+        .site-card:hover { transform: translateY(-3px); }
+        .site-card span { color: var(--primary); margin-right: 8px; font-weight: 800; font-size: 0.8rem; }
 
-			<!-- Instagram feed -->
-				<div id="instagram-wrapper" style="padding: 2em 0;">
-					<div class="container" style="text-align: center;">
-						<!-- "LightWidget" -->
-						<h3 style="margin-bottom: 1em;">Instagram feed</h3>
-					</div>
-				</div>
+        /* 6. Footer / Kontaktai */
+        .section-contact {
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.95)), url('images/banner.jpg');
+        }
+        .section-contact h2 { font-size: 2.2rem; margin-bottom: 20px; font-weight: 800; text-transform: uppercase; }
+        .social-icons a { 
+            display: inline-block; width: 55px; height: 55px; line-height: 55px;
+            background: rgba(255,255,255,0.15); border-radius: 50%; margin: 10px; font-size: 1.5rem;
+            transition: background 0.3s;
+        }
+        .social-icons a:hover { background: var(--primary); }
+        .contact-info { margin: 40px 0; font-size: 1.1rem; line-height: 2.5; text-align: left; display: inline-block; }
+        .contact-info i { color: var(--primary); margin-right: 15px; font-size: 1.3rem; width: 20px; text-align: center;}
+        .copyright { margin-top: 40px; font-size: 0.8rem; color: #888; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; width: 100%; }
 
-			
-				<div id="footer-wrapper">
-					<footer id="footer" class="container">
-						<div class="row aln-center">
-							<div class="col-12">
+        /* Mobiliesiems ekranams */
+        @media(max-width: 768px) {
+            .section-hero h1 { font-size: 1.8rem; }
+            .header-logo-text { display: none; /* Paslepiame tekstą telefone, paliekame tik PADI ikoną, kad tilptų */ }
+        }
+    </style>
+</head>
+<body>
 
-								
-									<section class="widget contact last" style="text-align: center;">
-										<h3>Contact us</h3>
-										
-										
-										<ul>
-											<li><a href="https://www.facebook.com/Masterscubacenter" target="_blank" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-											<li><a href="https://www.instagram.com/masterscubadiveresort/" target="_blank" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-											<li><a href="https://wa.me/6282144567600" target="_blank" class="icon brands fa-whatsapp"><span class="label">WhatsApp</span></a></li>
-										</ul>
-										
-										
-										<p style="font-size: 1.5em; line-height: 1.8em;">
-											<a href="https://maps.app.goo.gl/osa7nEfdqBk3LgNx8" target="_blank" style="text-decoration: none; color: inherit;">
-												<span class="icon solid fa-map-marker-alt" style="margin-right: 8px; color: #0090c5;"></span>
-												Google Maps location
-											</a><br />
-											<span class="icon brands fa-whatsapp" style="margin-right: 8px; color: #0090c5;"></span>WhatsApp: <a href="https://wa.me/6282144567600" style="text-decoration: none; color: inherit;">+62 82144567600</a><br />
-											<span class="icon solid fa-envelope" style="margin-right: 8px; color: #0090c5;"></span> <a href="mailto:masterscubacenter@gmail.com" style="text-decoration: none; color: inherit;">masterscubacenter@gmail.com</a>
-										</p>
-									</section>
+    <!-- 0. Fiksuota viršutinė juosta -->
+    <header>
+        <div class="header-logo-container">
+            <!-- PADI Logotipas -->
+            <img src="images/padi.jpg" alt="PADI">
+            <span class="header-logo-text">Master Scuba</span>
+        </div>
+        <a href="https://wa.me/6282144567600" target="_blank" class="header-btn">
+            <i class="fab fa-whatsapp"></i> Chat
+        </a>
+    </header>
 
-							</div>
-						</div>
-						
-						
-						<div class="row">
-							<div class="col-12">
-								<div id="copyright">
-									<ul class="menu" style="text-align: center;">
-										<li>&copy; Master Scuba Dive Resort.</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</footer>
-				</div>
+    <!-- 1. Hero sekcija (Nuotrauka + Centruotas Logo) -->
+    <section class="edge-section section-hero">
+        <img src="images/logo.png" alt="Master Scuba Dive Resort Logo">
+        <h1>Master Scuba Dive Resort</h1>
+        <p class="hero-subtitle">Gili Air</p>
+    </section>
 
-			</div>
+    <!-- 2. Intro (Duotone stilius) -->
+    <section class="edge-section section-intro">
+        <div class="intro-text">
+            <h2>Explore the Blue</h2>
+            <p>Welcome to our dive resort on the beautiful island of Gili Air. Experience crystal clear waters, vibrant coral reefs, and world-class diving with our professional team.</p>
+        </div>
+    </section>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+    <!-- 3. Paslaugų 2x3 Tinklelis (Sujungti kvadratai) -->
+    <section class="services-grid">
+        
+        <a href="#" class="service-square" style="background-image: url('images/pic01.jpg');">
+            <div class="service-title">
+                <h3>Fun Dive</h3>
+                <span>From €26</span>
+            </div>
+        </a>
 
-	</body>
+        <a href="#" class="service-square" style="background-image: url('images/pic02.jpg');">
+            <div class="service-title">
+                <h3>Discovery Scuba</h3>
+                <span>€48 / 4 Hours</span>
+            </div>
+        </a>
+
+        <a href="#" class="service-square" style="background-image: url('images/pic03.jpg');">
+            <div class="service-title">
+                <h3>Open Water</h3>
+                <span>€292 / 3 Days</span>
+            </div>
+        </a>
+
+        <a href="#" class="service-square" style="background-image: url('images/pic04.jpg');">
+            <div class="service-title">
+                <h3>Advanced</h3>
+                <span>€195 / 2 Days</span>
+            </div>
+        </a>
+
+        <a href="#" class="service-square" style="background-image: url('images/pic05.jpg');">
+            <div class="service-title">
+                <h3>Rescue Diver</h3>
+                <span>Contact Us</span>
+            </div>
+        </a>
+
+        <a href="#" class="service-square" style="background-image: url('images/pic06.jpg');">
+            <div class="service-title">
+                <h3>Divemaster</h3>
+                <span>Go Pro</span>
+            </div>
+        </a>
+
+    </section>
+
+    <!-- 4. Private Course (Duotone stilius) -->
+    <section class="edge-section section-private">
+        <div class="intro-text">
+            <h2>Private Experience</h2>
+            <p>Looking for a more personalized adventure? Book a private dive guide or instructor and explore the underwater world at your own pace, tailored exactly to your needs.</p>
+        </div>
+    </section>
+
+    <!-- 5. Diving Sites su Kortelėmis -->
+    <section class="edge-section section-sites" id="sites">
+        <h2>Diving Sites</h2>
+        
+        <div class="sites-list">
+            <div class="site-card"><span>01.</span> Turtle Heaven</div>
+            <div class="site-card"><span>02.</span> Shark Point</div>
+            <div class="site-card"><span>03.</span> Halik Reef</div>
+            <div class="site-card"><span>04.</span> Deep Turbo</div>
+            <div class="site-card"><span>05.</span> Shallow Turbo</div>
+            <div class="site-card"><span>06.</span> Han's Reef</div>
+            <div class="site-card"><span>07.</span> Meno Wall</div>
+            <div class="site-card"><span>08.</span> Bounty Wreck</div>
+            <div class="site-card"><span>09.</span> Air Slope</div>
+            <div class="site-card"><span>10.</span> Sunset Reef</div>
+            <div class="site-card"><span>11.</span> Harbor</div>
+            <div class="site-card"><span>12.</span> Secret Reef</div>
+            <div class="site-card"><span>13.</span> Good Heart Reef</div>
+            <div class="site-card"><span>14.</span> Taket Malang</div>
+            <div class="site-card"><span>15.</span> Air Wall</div>
+            <div class="site-card"><span>16.</span> Bongkas Air</div>
+            <div class="site-card"><span>17.</span> Simone Reef</div>
+            <div class="site-card"><span>18.</span> Bongkas Meno</div>
+            <div class="site-card"><span>19.</span> Meno Slope</div>
+            <div class="site-card"><span>20.</span> Biorock</div>
+            <div class="site-card"><span>21.</span> Glen Nusa</div>
+        </div>
+    </section>
+
+    <!-- 6. Footer / Kontaktai -->
+    <section class="edge-section section-contact">
+        <h2>Get in Touch</h2>
+        
+        <div class="social-icons">
+            <a href="https://www.facebook.com/Masterscubacenter" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/masterscubadiveresort/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/6282144567600" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        
+        <div class="contact-info">
+            <a href="https://maps.app.goo.gl/osa7nEfdqBk3LgNx8" target="_blank" style="display: block;">
+                <i class="fas fa-map-marker-alt"></i> Gili Air, Lombok
+            </a>
+            <a href="https://wa.me/6282144567600" target="_blank" style="display: block;">
+                <i class="fab fa-whatsapp"></i> +62 82144567600
+            </a>
+            <a href="mailto:masterscubacenter@gmail.com" style="display: block;">
+                <i class="fas fa-envelope"></i> masterscubacenter@gmail.com
+            </a>
+        </div>
+        
+        <div class="copyright">
+            &copy; Master Scuba Dive Resort. All rights reserved.
+        </div>
+    </section>
+
+</body>
 </html>
