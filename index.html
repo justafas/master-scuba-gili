@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Scuba Dive Resort - Gili Air</title>
+    <title>Master Scuba Center - Gili Air</title>
     
     <!-- Šriftai ir Ikonos -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -75,7 +75,7 @@
         .intro-text { max-width: 800px; font-size: 1.3rem; line-height: 1.6; font-weight: 400; }
         .intro-text h2 { font-size: 2.2rem; margin-bottom: 20px; font-weight: 800; text-transform: uppercase; }
 
-        /* 3. Paslaugų 2x3 Tinklelis */
+        /* 3. Paslaugų 3x3 Tinklelis (9 kvadratai) */
         .services-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -84,20 +84,160 @@
         @media(min-width: 768px) {
             .services-grid { grid-template-columns: repeat(3, 1fr); }
         }
+        /* Telefone (2 stulpeliuose) 9-asis kvadratas užima visą apatinę eilutę, kad neliktų tuščio tarpo */
+        @media(max-width: 767px) {
+            .service-square:nth-child(9) {
+                grid-column: span 2;
+                aspect-ratio: 2 / 1;
+            }
+        }
         .service-square {
             position: relative;
             aspect-ratio: 1 / 1;
             background-size: cover; background-position: center;
             overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .service-square::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: rgba(0, 144, 197, 0);
+            transition: background 0.3s ease;
+            pointer-events: none;
+        }
+        .service-square:hover::after {
+            background: rgba(0, 144, 197, 0.18);
         }
         .service-title {
             position: absolute; bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
-            padding: 40px 10px 15px; text-align: center;
-            display: flex; flex-direction: column; gap: 4px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.65) 65%, transparent 100%);
+            padding: 45px 12px 16px; text-align: center;
+            display: flex; flex-direction: column; gap: 6px;
+            z-index: 2;
         }
-        .service-title h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; line-height: 1.2; }
-        .service-title span { font-size: 0.8rem; color: #ccc; font-weight: 600; }
+        .service-title h3 { 
+            font-size: clamp(0.82rem, 1.4vw, 1.05rem); 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            line-height: 1.25; 
+        }
+        .service-title span { 
+            font-size: 0.8rem; 
+            color: var(--primary); 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Paslėptas aprašymo blokas tinklelyje (naudojamas tik modaliniam langui) */
+        .service-description {
+            display: none;
+        }
+
+        /* Modalino lango (Popup) stilius */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0, 12, 24, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex; justify-content: center; align-items: center;
+            padding: 20px;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+        .modal-container {
+            background: linear-gradient(145deg, #041f3a 0%, #02101f 100%);
+            border: 1px solid rgba(0, 144, 197, 0.4);
+            border-top: 4px solid var(--primary);
+            border-radius: 12px;
+            width: 100%; max-width: 580px;
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            transform: translateY(20px) scale(0.96);
+            transition: transform 0.3s ease;
+            position: relative;
+            text-align: left;
+        }
+        .modal-overlay.active .modal-container {
+            transform: translateY(0) scale(1);
+        }
+        .modal-header-img {
+            width: 100%; height: 200px;
+            background-size: cover; background-position: center;
+            position: relative;
+        }
+        .modal-header-img::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, #041f3a 0%, transparent 100%);
+        }
+        .modal-close {
+            position: absolute; top: 15px; right: 15px;
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff; font-size: 1.2rem;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 10;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .modal-close:hover {
+            background: var(--primary);
+            transform: scale(1.08);
+        }
+        .modal-content {
+            padding: 5px 28px 30px;
+        }
+        .modal-badge {
+            display: inline-block;
+            background: rgba(0, 144, 197, 0.2);
+            color: #4dc8f5;
+            border: 1px solid rgba(0, 144, 197, 0.45);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        .modal-body {
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: #dce6ef;
+            margin-bottom: 24px;
+        }
+        .modal-body p { margin-bottom: 12px; }
+        .modal-body ul { margin: 10px 0 15px 20px; }
+        .modal-body li { margin-bottom: 6px; }
+        .modal-cta {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%;
+            background: var(--primary);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease;
+        }
+        .modal-cta:hover {
+            background: #00a8e6;
+        }
 
         /* 4. Private Course Duotone */
         .section-private {
@@ -107,7 +247,6 @@
 
         /* 5. Diving Sites - Su minimalistinėmis kortelėmis */
         .section-sites {
-            /* Sumažintas tamsinimas - nuotrauka bus ryškesnė */
             background-image: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.4)), url('images/pic03.jpg');
             min-height: auto; padding-top: 100px; padding-bottom: 100px;
         }
@@ -125,7 +264,7 @@
         
         /* Kortelės stilius */
         .site-card {
-            background: rgba(255, 255, 255, 0.92); /* Beveik balta, šiek tiek permatoma */
+            background: rgba(255, 255, 255, 0.92);
             color: #222;
             padding: 14px 15px;
             border-radius: 8px;
@@ -158,7 +297,7 @@
         /* Mobiliesiems ekranams */
         @media(max-width: 768px) {
             .section-hero h1 { font-size: 1.8rem; }
-            .header-logo-text { display: none; /* Paslepiame tekstą telefone, paliekame tik PADI ikoną, kad tilptų */ }
+            .header-logo-text { display: none; }
         }
     </style>
 </head>
@@ -167,7 +306,6 @@
     <!-- 0. Fiksuota viršutinė juosta -->
     <header>
         <div class="header-logo-container">
-            <!-- PADI Logotipas -->
             <img src="images/padi.jpg" alt="PADI">
             <span class="header-logo-text">Master Scuba</span>
         </div>
@@ -178,63 +316,179 @@
 
     <!-- 1. Hero sekcija (Nuotrauka + Centruotas Logo) -->
     <section class="edge-section section-hero">
-        <img src="images/logo.png" alt="Master Scuba Dive Resort Logo">
-        <h1>Master Scuba Dive Resort</h1>
+        <img src="images/logo.png" alt="Master Scuba Center Logo">
+        <h1>Master Scuba Center</h1>
         <p class="hero-subtitle">Gili Air</p>
+        
     </section>
 
     <!-- 2. Intro (Duotone stilius) -->
     <section class="edge-section section-intro">
         <div class="intro-text">
-            <h2>Explore the Blue</h2>
-            <p>Welcome to our dive resort on the beautiful island of Gili Air. Experience crystal clear waters, vibrant coral reefs, and world-class diving with our professional team.</p>
+            <h2>ABOUT US </h2>
+            <p>Located in the heart of the idyllic Gili Islands, Master Scuba Diver Resort on Gili Air offers world-class diving experiences for adventurers of all levels. Our dive sites are home to vibrant coral gardens, abundant marine life, and most famously—sea turtles. Dive alongside these gentle giants in their natural habitat, a daily highlight for many of our guests. With experienced PADI instructors, small group sizes, and a strong focus on safety and environmental awareness, we provide personalized dive adventures that are as enriching as they are unforgettable. Whether you're taking your first breaths underwater or advancing your dive education, Master Scuba Diver Resort is your gateway to the magic of Gili Air’s underwater world.</p>
         </div>
     </section>
 
-    <!-- 3. Paslaugų 2x3 Tinklelis (Sujungti kvadratai) -->
+    <!-- 3. Paslaugų 3x3 Tinklelis (9 PADI programos) -->
     <section class="services-grid">
         
-        <a href="#" class="service-square" style="background-image: url('images/pic01.jpg');">
+        <!-- 1 KVADRATĖLIS -->
+        <div class="service-square" style="background-image: url('images/pic02.jpg');">
             <div class="service-title">
-                <h3>Fun Dive</h3>
-                <span>From €26</span>
+                <h3>PADI DISCOVER SCUBA DIVING PROGRAM</h3>
+                <span>€48 / 1-2 days</span>
             </div>
-        </a>
-
-        <a href="#" class="service-square" style="background-image: url('images/pic02.jpg');">
-            <div class="service-title">
-                <h3>Discovery Scuba</h3>
-                <span>€48 / 4 Hours</span>
+            <div class="service-description">
+                <p><strong>Your First Breath Underwater – Discover a Whole New World.</strong></p>
+                <p>Have you ever wondered what it feels like to breathe underwater? The PADI Discover Scuba Diving program is an introductory experience for people who want to try scuba diving without committing to a full certification course. A qualified PADI Professional explains the basic principles, helps you become familiar with the equipment, and directly supervises your underwater experience.</p>
+                <p><strong>What you will experience</strong><ul><li>An introduction to scuba equipment, basic diving principles, and underwater hand signals.</li><li>Practice with basic scuba skills in a suitable confined-water environment.</li><li>An optional open-water experience, where available and appropriate, under direct professional supervision.</li><li>An introduction to the marine environment and responsible ocean practices.</li></ul></p>
+                <p><strong>Course information</strong><ul><li>Minimum age: 10 years old.</li><li>Previous scuba experience: Not required.</li><li>Certification: No scuba certification is awarded.</li><li>Maximum depth: Up to 12 meters for an open-water dive, subject to program standards, age and conditions and instructor assessment.</li><li>Supervision: Direct supervision by a qualified PADI Professional.</li></ul></p>
+                <p><strong>Try scuba diving and discover the underwater world with MASTER SCUBA CENTER.</strong></p>
             </div>
-        </a>
+        </div>
 
-        <a href="#" class="service-square" style="background-image: url('images/pic03.jpg');">
+        <!-- 2 KVADRATĖLIS -->
+        <div class="service-square" style="background-image: url('images/pic01.jpg');">
             <div class="service-title">
-                <h3>Open Water</h3>
-                <span>€292 / 3 Days</span>
-            </div>
-        </a>
-
-        <a href="#" class="service-square" style="background-image: url('images/pic04.jpg');">
-            <div class="service-title">
-                <h3>Advanced</h3>
-                <span>€195 / 2 Days</span>
-            </div>
-        </a>
-
-        <a href="#" class="service-square" style="background-image: url('images/pic05.jpg');">
-            <div class="service-title">
-                <h3>Rescue Diver</h3>
+                <h3>PADI SCUBA DIVER COURSE</h3>
                 <span>Contact Us</span>
             </div>
-        </a>
+            <div class="service-description">
+                <p><strong>Take Your First Step Towards Becoming a Certified Scuba Diver.</strong></p>
+                <p>The PADI Scuba Diver course is designed for people who want a recognized entry-level certification but have limited time. It covers essential diving knowledge and skills and qualifies graduates to dive under the direct supervision of a PADI Divemaster or Instructor, within the limits of their certification.</p>
+                <p><strong>What you will learn</strong></p>
+                <ul><li>Basic scuba diving theory, pressure, breathing, and underwater safety.</li><li>Scuba equipment preparation and use.</li><li>Essential skills such as mask clearing, regulator recovery, and buoyancy control.</li><li>Underwater communication, safe procedures, and practical open-water skills.</li></ul>
+                <p><strong>Course information</strong></p>
+                <ul><li>Minimum age: 10 years old.</li><li>Previous experience: Not required.</li><li>Training: Knowledge development, three confined-water sessions, and two open-water dives.</li><li>Maximum depth: 12 Meters / 40 feet.</li><li>Certification: PADI Scuba Diver; dives require direct supervision by a PADI Divemaster or Instructor.</li></ul>
+                <p><strong>Continue your education later by upgrading to PADI Open Water Diver.</strong></p>
 
-        <a href="#" class="service-square" style="background-image: url('images/pic06.jpg');">
+            </div>
+        </div>
+
+        <!-- 3 KVADRATĖLIS -->
+        <div class="service-square" style="background-image: url('images/pic03.jpg');">
             <div class="service-title">
-                <h3>Divemaster</h3>
+                <h3>PADI OPEN WATER DIVER COURSE</h3>
+                <span>€292 / 2-3 Days</span>
+            </div>
+            <div class="service-description">
+                <p><strong>Become a Certified Diver. Explore the Ocean. Discover Freedom Underwater.</strong></p>
+                <p>The PADI Open Water Diver course is the world’s best-known entry-level scuba certification. It teaches beginners the knowledge and practical skills needed to dive with a buddy, without direct professional supervision, within the limits of their training and certification.</p>
+                <p><strong>Your training journey</strong></p>
+                <ul><li>Knowledge development: diving physics and physiology, pressure and equalization, equipment, dive planning, safety, and environmental awareness.</li><li>Confined-water training: practice equipment use, mask clearing, regulator recovery, buoyancy, and other essential skills.</li><li>Open-water training: complete four training dives with an instructor and apply your skills in the ocean.</li></ul>
+                <p><strong>Course information</strong></p>
+                <p><ul><li>Minimum age: 10 years old.</li><li>Previous experience: Not required.</li><li>Training: Knowledge development, confined-water training, and four open-water dives.</li><li>Maximum depth after certification: 18 Meters / 60 feet for divers aged 15 and older; junior depth limits apply to younger divers.</li><li>Certification: PADI Open Water Diver.</li></ul></p>
+
+            </div>
+        </div>
+
+        <!-- 4 KVADRATĖLIS -->
+        <div class="service-square" style="background-image: url('images/pic04.jpg');">
+            <div class="service-title">
+                <h3>PADI ADVANCED OPEN WATER DIVER COURSE</h3>
+                <span>€195 / 2 Days</span>
+            </div>
+            <div class="service-description">
+                <p><strong>Take Your Diving Skills to the Next Level.</strong></p>
+                <p>The PADI Advanced Open Water Diver course helps certified divers build experience, improve confidence, and explore different types of diving. It is not simply about going deeper: it is an opportunity to practice new skills and broaden your underwater experience with an instructor.</p>
+                <P><strong>What you will experience</strong></P>
+                <ul><li>Five Adventure Dives, including the required Deep Adventure Dive and Underwater Navigation Adventure Dive.</li><li>Three additional Adventure Dives selected with your instructor from available options.</li><li>Depending on local conditions and availability, options may include Peak Performance Buoyancy, Fish Identification, Drift Diving, or Underwater Photography.</li></ul>
+                <p><strong>Course information</strong></p>
+                <ul><li>Prerequisite: PADI Open Water Diver or qualifying certification.</li><li>Minimum age: Generally, 12 years old; selected dives may have additional age requirements.</li><li>Training: Five Adventure Dives.</li><li>Deep Adventure Dive: Maximum 30 Meters for divers aged 15 and older; junior depth restrictions apply.</li><li>Certification: PADI Advanced Open Water Diver.</li></ul>
+                <p><strong>Discover more, build experience, and become a more confident diver.</strong></p>
+            </div>
+        </div>
+
+        <!-- 5 KVADRATĖLIS -->
+        <div class="service-square" style="background-image: url('images/pic05.jpg');">
+            <div class="service-title">
+                <h3>PADI RESCUE DIVER COURSE</h3>
+                <span>2 Days</span>
+            </div>
+            <div class="service-description">
+                <p><strong>Become a More Confident Diver. Learn to Help Others.</strong></p>
+                <p>The PADI Rescue Diver course develops a diver’s awareness, confidence, and ability to help prevent and manage diving problems. Students learn to recognize stress, assist other divers, and respond to a range of emergency situations through knowledge development, rescue exercises, and realistic scenarios.</p>
+                <p><strong>What you will learn</strong></p>
+                <ul><li>Recognising and managing diver stress and preventing incidents.</li><li>Assisting tired or panicked divers.</li><li>Responding to underwater emergencies and missing-diver situations.</li><li>Rescue techniques for unresponsive divers and emergency response planning.</li></ul>
+                <p><strong>Course information</strong></p>
+                <ul><li>Minimum age: 12 years old for Junior Rescue Diver; 15 years old for Rescue Diver.</li><li>Prerequisite: PADI Advanced Open Water Diver or qualifying certification.</li><li>CPR and first aid: Current training within the previous 24 months.</li><li>Other requirements: Meet applicable medical and course requirements.</li><li>Certification: PADI Rescue Diver, subject to successful completion.</li></ul>
+                <p><strong>Become a better buddy and a safer, more capable diver.</strong></p>
+            </div>
+        </div>
+
+        <!-- 6 KVADRATĖLIS -->
+        <div class="service-square" style="background-image: url('images/pic02.jpg');">
+            <div class="service-title">
+                <h3>EMERGENCY FIRST RESPONSE (EFR)</h3>
+                <span>1 Day</span>
+            </div>
+            <div class="service-description">
+                <p><strong>Be Prepared. Be Confident. Make a Difference.</strong></p>
+                <p>Emergency First Response training teaches practical first aid and CPR skills for responding to medical emergencies. The courses are suitable for divers and non-divers and focus on building the confidence to provide care until professional medical assistance is available.</p>
+                <p><strong>Primary Care (CPR)</strong></p>
+                <ul><li>Assessing an emergency and checking responsiveness and breathing.</li><li>Performing CPR and using an AED where available and appropriate.</li><li>Managing serious bleeding and providing care for shock.</li></ul>
+                <p><strong>Secondary Care (First Aid)</strong></p>
+                <ul><li>Assessing injuries and illnesses that are not immediately life-threatening.</li><li>Providing basic wound care and bandaging.</li><li>Recognizing and managing common first-aid situations, including sprains and fractures.</li></ul>
+                <p><strong>Practical training</strong></p>
+                <p>Students practice skills and work through realistic scenarios with an EFR Instructor.</p>
+                <p><strong>Course information</strong></p>
+                <ul><li>Suitable for: Divers and non-divers.</li><li>Previous experience: Not required for the standard EFR courses.</li><li>Training: Primary Care and Secondary Care, as applicable.</li><li>Certification: Emergency First Response certification upon successful completion.</li></ul>
+                <p><strong>Learn essential first-aid skills and be ready to help when it matters.</strong></p>
+            </div>
+        </div>
+
+        <!-- 7 KVADRATĖLIS -->
+        <div class="service-square" style="background-image: url('images/pic06.jpg');">
+            <div class="service-title">
+                <h3>PADI DIVEMASTER COURSE</h3>
                 <span>Go Pro</span>
             </div>
-        </a>
+            <div class="service-description">
+                <p><strong>Turn Your Passion for Diving into a Professional Career.</strong></p>
+                <p>The PADI Divemaster course is the first professional-level certification in the PADI recreational diving system. It is designed for experienced divers who want to develop leadership, assist with diver training, and supervise certain recreational diving activities within PADI standards and local regulations.</p>
+                <p><strong>What you will develop</strong></p>
+                <ul><li>Dive knowledge: physics, physiology, equipment, decompression theory, planning, and risk management. Water skills: stamina, rescue skills, and strong personal diving ability.</li><li>Dive leadership: organizing activities, conducting briefings, supervising divers, and assisting instructors.</li><li>Practical experience: learn about dive-center operations and professional responsibilities in a real resort environment.</li></ul>
+                <p><strong>Course information</strong></p>
+                <ul><li>Minimum age: 18 years old.</li><li>Prerequisites: PADI Rescue Diver or qualifying certification, and qualifying Advanced-level training.</li><li>EFR Primary and Secondary Care: Current within the previous 24 months.</li><li>Logged dives: At least 40 to begin and 60 to qualify for certification.</li><li>Also required: Current medical statement and all applicable PADI prerequisites.</li><li>Certification: PADI Divemaster, upon successful completion.</li></ul>
+                <p><strong>Build your skills, develop your leadership, and take the first step towards a diving career.</strong></p>
+            </div>
+        </div>
+
+        <!-- 8 KVADRATĖLIS -->
+        <div class="service-square" style="background-image: url('images/pic01.jpg');">
+            <div class="service-title">
+                <h3>SCUBA TUNE-UP / REFRESHER PROGRAM</h3>
+                <span>From €26</span>
+            </div>
+            <div class="service-description">
+                <p><strong>Refresh Your Skills. Rebuild Your Confidence. Get Back Underwater.</strong></p>
+                <p>Have you been away from scuba diving for a while? The Scuba Tune-Up / Refresher program helps certified divers review essential knowledge and practical skills before returning to the ocean. An instructor can tailor the session to your experience, comfort, and needs.</p>
+                <p><strong>What you can refresh</strong></p>
+                <ul><li>Scuba equipment assembly and safety checks.</li><li>Basic diving knowledge, safety procedures, and underwater communication.</li><li>Regulator recovery and clearing, mask clearing, and buoyancy control.</li><li>Entry and exit techniques and basic emergency procedures.</li></ul>
+                <p><strong>Course information</strong></p>
+                <ul><li>Previous certification: Required.</li><li>Designed for: Certified divers who have not dived recently or want extra practice.</li><li>Training: Knowledge review and practical in-water skills, tailored to the diver.</li><li>Certification: A general refresher is not a new certification. PADI Re-Activate recognition may be available when completed under the applicable program requirements.</li></ul>
+                <p><strong>Get back in the water with renewed confidence. A refresher does not replace required training or certification.</strong></p>
+            </div>
+        </div>
+
+        <!-- 9 KVADRATĖLIS -->
+        <div class="service-square" style="background-image: url('images/pic03.jpg');">
+            <div class="service-title">
+                <h3>PADI BUBBLEMAKER PROGRAM</h3>
+                
+                <span>1-2 days - For Kids</span>
+            </div>
+            <div class="service-description">
+                <p><strong>Big Adventures for Little Ocean Explorers!</strong></p>
+                <p>The PADI Bubblemaker program introduces children to the fun of scuba diving in a controlled, enjoyable environment. Children learn how scuba equipment works and experience breathing underwater under the direct supervision of a qualified PADI Professional.</p>
+                <p><strong>What children will experience</strong></p>
+                <ul><li>An introduction to scuba equipment and basic underwater awareness.</li><li>Learning to breathe underwater and make bubbles.</li><li>Enjoying simple, age-appropriate underwater activities.</li><li>Discovering the excitement of scuba diving in a safe, controlled setting.</li></ul>
+                <p><strong>Course information</strong></p>
+                <ul><li>Minimum age: 8 years old.</li><li>Previous experience: Not required.</li><li>Maximum depth: 2 Meters / 6 feet.</li><li>Environment: Swimming pool or suitable confined-water environment.</li><li>Supervision: Direct supervision by a qualified PADI Professional.</li><li>Recognition: PADI Bubblemaker recognition; this is not a scuba certification.</li></ul>
+                <p><strong>Give young explorers a fun first taste of the underwater world.</strong></p>
+            </div>
+        </div>
 
     </section>
 
@@ -243,11 +497,20 @@
         <div class="intro-text">
             <h2>Private Experience</h2>
             <p>Looking for a more personalized adventure? Book a private dive guide or instructor and explore the underwater world at your own pace, tailored exactly to your needs.</p>
+            <p><strong>Private Dive boat</strong></p>
+            <p><strong>Private DM/Instructor</strong></p>
         </div>
     </section>
 
     <!-- 5. Diving Sites su Kortelėmis -->
     <section class="edge-section section-sites" id="sites">
+        <div class="intro-text">
+        <h1>DIVE AROUND THE THREE GILIS</h1>
+        <p>MASTER SCUBA CENTER is based on Gili Air Island, with diving activities around Gili Air, Gili Trawangan, and Gili Meno. The three islands offer a variety of tropical underwater environments and dive experiences.</p>
+        </div>
+        <div class="intro-text">
+            <p>|</p>
+        </div>
         <h2>Diving Sites</h2>
         
         <div class="sites-list">
@@ -282,6 +545,7 @@
         <div class="social-icons">
             <a href="https://www.facebook.com/Masterscubacenter" target="_blank"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/masterscubadiveresort/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@master.scuba.diveresort" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
             <a href="https://wa.me/6282144567600" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
         
@@ -298,9 +562,83 @@
         </div>
         
         <div class="copyright">
-            &copy; Master Scuba Dive Resort. All rights reserved.
+            &copy; Master Scuba Center. All rights reserved.
         </div>
     </section>
+
+    <!-- 7. Modalinis langas (automatiškai užpildomas paspaudus ant kvadrato) -->
+    <div class="modal-overlay" id="serviceModal" aria-hidden="true">
+        <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" id="modalCloseBtn" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header-img" id="modalImg"></div>
+            <div class="modal-content">
+                <span class="modal-badge" id="modalBadge"></span>
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <div class="modal-body" id="modalBody"></div>
+                <a href="https://wa.me/6282144567600" target="_blank" class="modal-cta" id="modalWhatsappBtn">
+                    <i class="fab fa-whatsapp"></i> Book / Inquire via WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript modalo valdymui -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('serviceModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalBadge = document.getElementById('modalBadge');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const modalWhatsappBtn = document.getElementById('modalWhatsappBtn');
+            const closeBtn = document.getElementById('modalCloseBtn');
+            const squares = document.querySelectorAll('.service-square');
+
+            squares.forEach(square => {
+                square.addEventListener('click', () => {
+                    const title = square.querySelector('.service-title h3').textContent.trim();
+                    const subtitle = square.querySelector('.service-title span').textContent.trim();
+                    const descriptionHTML = square.querySelector('.service-description').innerHTML;
+                    const bgImage = square.style.backgroundImage;
+
+                    modalTitle.textContent = title;
+                    modalBadge.textContent = subtitle;
+                    modalBody.innerHTML = descriptionHTML;
+                    modalImg.style.backgroundImage = bgImage;
+
+                    // Automatiškai suformuoja WhatsApp žinutę su pasirinkto kurso pavadinimu
+                    const encodedMsg = encodeURIComponent(`Hello! I would like to inquire about the ${title}.`);
+                    modalWhatsappBtn.href = `https://wa.me/6282144567600?text=${encodedMsg}`;
+
+                    modal.classList.add('active');
+                    modal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+
+            closeBtn.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
