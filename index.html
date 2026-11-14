@@ -71,6 +71,7 @@
             justify-content: center; align-items: center;
             text-align: center; padding: 100px 20px 80px;
             background-size: cover; background-position: center; background-repeat: no-repeat;
+            position: relative; /* Pridėta dėl scroll-down ikonos pozicionavimo */
         }
 
         /* 1. Hero / Logo per vidurį */
@@ -80,6 +81,37 @@
         .section-hero img { max-width: 90%; max-height: 200px; width: auto; margin-bottom: 25px; }
         .section-hero h1 { font-size: 2.4rem; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2; margin-bottom: 5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);}
         .hero-subtitle { font-size: 1.3rem; letter-spacing: 2px; font-weight: 500; color: #fff; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);}
+
+        /* -- NAUJA: Scroll Down indikatorius Hero sekcijoje -- */
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            transition: background 0.3s ease;
+        }
+        .scroll-down-indicator:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-15px) translateX(-50%); }
+            60% { transform: translateY(-7px) translateX(-50%); }
+        }
 
         /* 2. SERVICES GRUPUOTA GALERIJA */
         .section-services {
@@ -102,19 +134,19 @@
             text-align: center;
         }
 
-        /* NAUJA: Grid tinklelio sistema kortelėms */
+        /* Grid tinklelio sistema kortelėms */
         .gallery-row {
             display: grid;
             grid-template-columns: repeat(2, 1fr); /* Telefone: 2 stulpeliai */
             gap: 15px;
             width: 100%;
-            max-width: 950px; /* Optimalus plotis kompiuteryje (priderintas prie Dive Sites) */
-            margin: 0 auto; /* Centruoja patį tinklelį ekrane */
+            max-width: 950px; 
+            margin: 0 auto; 
         }
         
         @media(min-width: 768px) {
             .gallery-row {
-                grid-template-columns: repeat(3, 1fr); /* Tablet / Kompiuteryje: 3 stulpeliai */
+                grid-template-columns: repeat(3, 1fr); 
                 gap: 25px;
             }
         }
@@ -122,8 +154,8 @@
         /* Kortelė */
         .gallery-item {
             position: relative;
-            width: 100%; /* Užima visą grid'o stulpelį */
-            aspect-ratio: 3 / 4; /* Optimalus santykis telefonui */
+            width: 100%;
+            aspect-ratio: 3 / 4; 
             background-size: cover; background-position: center;
             border-radius: 12px; overflow: hidden; cursor: pointer;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
@@ -161,14 +193,12 @@
 
         /* Kompiuterių ekranams */
         @media(min-width: 768px) {
-            .gallery-item {
-                aspect-ratio: 4 / 5; /* Truputį aukštesnis santykis PC ekrane */
-            }
+            .gallery-item { aspect-ratio: 4 / 5; }
             .gallery-content { padding: 25px 20px; }
             .gallery-content h3 { font-size: 1.25rem; }
         }
 
-        /* Mažiesiems telefonų ekranams (teksto pritaikymas, kad 2 kortelės atrodytų gražiai) */
+        /* Mažiesiems telefonų ekranams */
         @media(max-width: 450px) {
             .gallery-content h3 { font-size: 0.95rem; margin-bottom: 6px; }
             .gallery-price { font-size: 0.75rem; padding: 3px 8px; }
@@ -205,8 +235,8 @@
             text-align: left; border-left: 5px solid var(--primary);
             box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: transform 0.2s;
             display: flex; align-items: center;
-            cursor: pointer; /* Pridėtas pointeris, kad suprastų, jog paspaudžiama */
-            position: relative; /* Svarbu paslėptiems duomenims */
+            cursor: pointer; 
+            position: relative; 
         }
         .site-card:hover { transform: translateY(-3px); }
         .site-card span.site-number { color: var(--primary); margin-right: 8px; font-weight: 800; font-size: 0.8rem; }
@@ -250,22 +280,30 @@
         .modal-container {
             background: linear-gradient(145deg, #041f3a 0%, #02101f 100%);
             border: 1px solid rgba(0, 144, 197, 0.4); border-top: 4px solid var(--primary);
-            border-radius: 12px; width: 100%; max-width: 580px; max-height: 88vh; overflow-y: auto;
+            border-radius: 12px; width: 100%; max-width: 580px; max-height: 88vh; 
+            overflow: hidden; /* Svarbu: slepiame overflow čia, skrolinama bus viduje */
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); transform: translateY(20px) scale(0.96);
             transition: transform 0.3s ease; position: relative; text-align: left;
+            display: flex; flex-direction: column;
         }
         .modal-overlay.active .modal-container { transform: translateY(0) scale(1); }
         
+        /* Modal Scrollable Area (Pakeista struktūra dėl scroll indikatoriaus) */
+        .modal-scroll-area {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-bottom: 80px; /* Paliekam vietos mygtukui apačioje */
+        }
+
         .modal-header-img {
             width: 100%; height: 180px; background-size: cover; background-position: center; position: relative;
+            flex-shrink: 0;
         }
         .modal-header-img::after {
             content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #041f3a 0%, transparent 100%);
         }
-        /* Atskiras paveikslėlis Sites modalui (nes kortelės neturi fono nuotraukos) */
-        #siteModalImg {
-            background-image: url('images/pic03.jpg'); /* Default nuotrauka visoms vietoms */
-        }
+        
+        #siteModalImg { background-image: url('images/pic03.jpg'); }
 
         .modal-close {
             position: absolute; top: 15px; right: 15px; width: 38px; height: 38px;
@@ -274,7 +312,8 @@
             cursor: pointer; z-index: 10; transition: background 0.2s ease, transform 0.2s ease;
         }
         .modal-close:hover { background: var(--primary); transform: scale(1.08); }
-        .modal-content { padding: 5px 28px 30px; }
+        
+        .modal-content { padding: 5px 28px 10px; }
         .modal-badge {
             display: inline-block; background: rgba(0, 144, 197, 0.2); color: var(--primary-light);
             border: 1px solid rgba(0, 144, 197, 0.45); padding: 5px 13px; border-radius: 20px;
@@ -282,24 +321,55 @@
         }
         .modal-title { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; line-height: 1.25; margin-bottom: 16px; color: #fff; }
         
-        /* Gylio informacija Sites modalui */
         .site-depth-info {
             display: flex; align-items: center; gap: 8px; margin-bottom: 15px;
             font-size: 0.95rem; font-weight: 600; color: var(--primary-light);
         }
-        .site-depth-info i { font-size: 1.1rem; }
-
-        .modal-body { font-size: 0.96rem; line-height: 1.65; color: #dce6ef; margin-bottom: 24px; }
+        
+        .modal-body { font-size: 0.96rem; line-height: 1.65; color: #dce6ef; margin-bottom: 10px; }
         .modal-body p { margin-bottom: 12px; }
         .modal-body ul { margin: 10px 0 15px 20px; }
         .modal-body li { margin-bottom: 6px; }
+        
+        /* Modal Footer su fiksuotu CTA mygtuku ir Scroll indikatoriumi */
+        .modal-footer {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, #02101f 70%, transparent 100%);
+            padding: 20px 28px 25px;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            pointer-events: none; /* Kad neblokuotų paspaudimų, jei nėra fono */
+        }
         .modal-cta {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
             background: var(--primary); color: #fff; padding: 14px 20px; border-radius: 6px;
             font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;
             transition: background 0.2s ease;
+            pointer-events: auto; /* Grąžiname paspaudimus mygtukui */
         }
         .modal-cta:hover { background: #00a8e6; }
+        
+        /* -- NAUJA: Modalo Scroll indikatorius -- */
+        .modal-scroll-hint {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0; /* Paslėpta pagal nutylėjimą, įjungiama per JS */
+            transition: opacity 0.3s ease;
+            margin-bottom: -5px;
+        }
+        .modal-scroll-hint.visible {
+            opacity: 1;
+            animation: gentle-bounce 2s infinite;
+        }
+        @keyframes gentle-bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-4px); }
+            60% { transform: translateY(-2px); }
+        }
 
         /* Mobiliesiems ekranams (Meniu) */
         @media(max-width: 860px) {
@@ -347,9 +417,14 @@
         <img src="images/logo.png" alt="Master Scuba Center Logo">
         <h1>Master Scuba Center</h1>
         <p class="hero-subtitle">Gili Air</p>
+        
+        <!-- Scroll down rodyklė -->
+        <a href="#services" class="scroll-down-indicator" aria-label="Scroll down to services">
+            <i class="fas fa-chevron-down"></i>
+        </a>
     </section>
 
-    <!-- 2. Services & Price List (Tobulai sulygiuotas Grid) -->
+    <!-- 2. Services & Price List -->
     <section id="services" class="edge-section section-services">
         <div class="section-header">
             <h2>Services &amp; Price List</h2>
@@ -737,7 +812,6 @@
         
         <div class="sites-list">
             
-            <!-- Site 01 -->
             <div class="site-card">
                 <span class="site-number">01.</span> <span class="site-name">Turtle Heaven</span>
                 <div class="site-details">
@@ -748,7 +822,6 @@
                 </div>
             </div>
 
-            <!-- Site 02 -->
             <div class="site-card">
                 <span class="site-number">02.</span> <span class="site-name">Shark Point</span>
                 <div class="site-details">
@@ -759,7 +832,6 @@
                 </div>
             </div>
 
-            <!-- Site 03 -->
             <div class="site-card">
                 <span class="site-number">03.</span> <span class="site-name">Halik Reef</span>
                 <div class="site-details">
@@ -770,7 +842,6 @@
                 </div>
             </div>
 
-            <!-- Site 04 -->
             <div class="site-card">
                 <span class="site-number">04.</span> <span class="site-name">Deep Turbo</span>
                 <div class="site-details">
@@ -781,7 +852,6 @@
                 </div>
             </div>
 
-            <!-- Site 05 -->
             <div class="site-card">
                 <span class="site-number">05.</span> <span class="site-name">Shallow Turbo</span>
                 <div class="site-details">
@@ -792,7 +862,6 @@
                 </div>
             </div>
 
-            <!-- Site 06 -->
             <div class="site-card">
                 <span class="site-number">06.</span> <span class="site-name">Han's Reef</span>
                 <div class="site-details">
@@ -803,7 +872,6 @@
                 </div>
             </div>
 
-            <!-- Site 07 -->
             <div class="site-card">
                 <span class="site-number">07.</span> <span class="site-name">Meno Wall</span>
                 <div class="site-details">
@@ -814,7 +882,6 @@
                 </div>
             </div>
 
-            <!-- Site 08 -->
             <div class="site-card">
                 <span class="site-number">08.</span> <span class="site-name">Bounty Wreck</span>
                 <div class="site-details">
@@ -825,7 +892,6 @@
                 </div>
             </div>
 
-            <!-- Site 09 -->
             <div class="site-card">
                 <span class="site-number">09.</span> <span class="site-name">Air Slope</span>
                 <div class="site-details">
@@ -836,7 +902,6 @@
                 </div>
             </div>
 
-            <!-- Site 10 -->
             <div class="site-card">
                 <span class="site-number">10.</span> <span class="site-name">Sunset Reef</span>
                 <div class="site-details">
@@ -847,7 +912,6 @@
                 </div>
             </div>
 
-            <!-- Site 11 -->
             <div class="site-card">
                 <span class="site-number">11.</span> <span class="site-name">Harbor</span>
                 <div class="site-details">
@@ -858,7 +922,6 @@
                 </div>
             </div>
 
-            <!-- Site 12 -->
             <div class="site-card">
                 <span class="site-number">12.</span> <span class="site-name">Secret Reef</span>
                 <div class="site-details">
@@ -869,7 +932,6 @@
                 </div>
             </div>
 
-            <!-- Site 13 -->
             <div class="site-card">
                 <span class="site-number">13.</span> <span class="site-name">Good Heart Reef</span>
                 <div class="site-details">
@@ -880,7 +942,6 @@
                 </div>
             </div>
 
-            <!-- Site 14 -->
             <div class="site-card">
                 <span class="site-number">14.</span> <span class="site-name">Taket Malang</span>
                 <div class="site-details">
@@ -891,7 +952,6 @@
                 </div>
             </div>
 
-            <!-- Site 15 -->
             <div class="site-card">
                 <span class="site-number">15.</span> <span class="site-name">Air Wall</span>
                 <div class="site-details">
@@ -902,7 +962,6 @@
                 </div>
             </div>
 
-            <!-- Site 16 -->
             <div class="site-card">
                 <span class="site-number">16.</span> <span class="site-name">Bongkas Air</span>
                 <div class="site-details">
@@ -913,7 +972,6 @@
                 </div>
             </div>
 
-            <!-- Site 17 -->
             <div class="site-card">
                 <span class="site-number">17.</span> <span class="site-name">Simone Reef</span>
                 <div class="site-details">
@@ -924,7 +982,6 @@
                 </div>
             </div>
 
-            <!-- Site 18 -->
             <div class="site-card">
                 <span class="site-number">18.</span> <span class="site-name">Bongkas Meno</span>
                 <div class="site-details">
@@ -935,7 +992,6 @@
                 </div>
             </div>
 
-            <!-- Site 19 -->
             <div class="site-card">
                 <span class="site-number">19.</span> <span class="site-name">Meno Slope</span>
                 <div class="site-details">
@@ -946,7 +1002,6 @@
                 </div>
             </div>
 
-            <!-- Site 20 -->
             <div class="site-card">
                 <span class="site-number">20.</span> <span class="site-name">Biorock</span>
                 <div class="site-details">
@@ -957,7 +1012,6 @@
                 </div>
             </div>
 
-            <!-- Site 21 -->
             <div class="site-card">
                 <span class="site-number">21.</span> <span class="site-name">Glen Nusa</span>
                 <div class="site-details">
@@ -1013,44 +1067,56 @@
             <button class="modal-close" id="modalCloseBtn" aria-label="Close modal">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="modal-header-img" id="modalImg"></div>
-            <div class="modal-content">
-                <span class="modal-badge" id="modalBadge"></span>
-                <h3 class="modal-title" id="modalTitle"></h3>
-                <div class="modal-body" id="modalBody"></div>
-                <a href="https://wa.me/6282144567600" target="_blank" class="modal-cta" id="modalWhatsappBtn">
+            
+            <div class="modal-scroll-area" id="serviceScrollArea">
+                <div class="modal-header-img" id="modalImg"></div>
+                <div class="modal-content">
+                    <span class="modal-badge" id="modalBadge"></span>
+                    <h3 class="modal-title" id="modalTitle"></h3>
+                    <div class="modal-body" id="modalBody"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="modal-scroll-hint" id="serviceScrollHint">Scroll for more info <i class="fas fa-arrow-down"></i></div>
+                <a href="#" target="_blank" class="modal-cta" id="modalWhatsappBtn">
                     <i class="fab fa-whatsapp"></i> Inquire via WhatsApp
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- 8. NAUJAS: Modalinis langas nardymo vietoms (Dive Sites) -->
+    <!-- 8. Modalinis langas nardymo vietoms (Dive Sites) -->
     <div class="modal-overlay" id="siteModal" aria-hidden="true">
         <div class="modal-container" role="dialog" aria-modal="true">
             <button class="modal-close" id="siteModalCloseBtn" aria-label="Close modal">
                 <i class="fas fa-times"></i>
             </button>
-            <!-- Naudosime bendrą gražią nuotrauką sites modalui -->
-            <div class="modal-header-img" id="siteModalImg"></div>
-            <div class="modal-content">
-                <span class="modal-badge">Dive Site</span>
-                <h3 class="modal-title" id="siteModalTitle"></h3>
-                
-                <div class="site-depth-info">
-                    <i class="fas fa-arrows-alt-v"></i> <span id="siteModalDepth"></span>
-                </div>
+            
+            <div class="modal-scroll-area" id="siteScrollArea">
+                <div class="modal-header-img" id="siteModalImg"></div>
+                <div class="modal-content">
+                    <span class="modal-badge">Dive Site</span>
+                    <h3 class="modal-title" id="siteModalTitle"></h3>
+                    
+                    <div class="site-depth-info">
+                        <i class="fas fa-arrows-alt-v"></i> <span id="siteModalDepth"></span>
+                    </div>
 
-                <div class="modal-body" id="siteModalBody"></div>
-                
-                <a href="https://wa.me/6282144567600" target="_blank" class="modal-cta" id="siteModalWhatsappBtn">
+                    <div class="modal-body" id="siteModalBody"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="modal-scroll-hint" id="siteScrollHint">Scroll for more info <i class="fas fa-arrow-down"></i></div>
+                <a href="#" target="_blank" class="modal-cta" id="siteModalWhatsappBtn">
                     <i class="fab fa-whatsapp"></i> Book a Dive Here
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Modalui ir Meniu -->
+    <!-- JavaScript Modalui, Meniu ir Išmaniam Scroll -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // -- Mobilus Meniu (Hamburger) --
@@ -1066,6 +1132,39 @@
                 });
             });
 
+            // -- Funkcija Išmaniam Modalo Slinkimo Indikatoriui --
+            function checkScrollability(scrollArea, hintElement) {
+                // Jei turinys didesnis nei matoma zona, rodom hint'ą
+                if (scrollArea.scrollHeight > scrollArea.clientHeight) {
+                    // Bet tik jei dar nesame pačioje apačioje
+                    if (Math.ceil(scrollArea.scrollTop + scrollArea.clientHeight) < scrollArea.scrollHeight) {
+                        hintElement.classList.add('visible');
+                    } else {
+                        hintElement.classList.remove('visible');
+                    }
+                } else {
+                    hintElement.classList.remove('visible');
+                }
+            }
+
+            function setupModalScroll(scrollAreaId, hintId) {
+                const scrollArea = document.getElementById(scrollAreaId);
+                const hintElement = document.getElementById(hintId);
+                
+                scrollArea.addEventListener('scroll', () => {
+                    // Vos pradedam scrolinti - paslepiam hint'ą, kad netrukdytų
+                    if (scrollArea.scrollTop > 10) {
+                        hintElement.classList.remove('visible');
+                    }
+                });
+
+                // Grąžiname patikrinimo funkciją, kad galėtume iškviesti atidarius modalą
+                return () => checkScrollability(scrollArea, hintElement);
+            }
+
+            const checkServiceScroll = setupModalScroll('serviceScrollArea', 'serviceScrollHint');
+            const checkSiteScroll = setupModalScroll('siteScrollArea', 'siteScrollHint');
+
             // ==========================================
             // SERVICES MODAL
             // ==========================================
@@ -1076,6 +1175,7 @@
             const sModalBody = document.getElementById('modalBody');
             const sModalWhatsappBtn = document.getElementById('modalWhatsappBtn');
             const sCloseBtn = document.getElementById('modalCloseBtn');
+            const serviceScrollArea = document.getElementById('serviceScrollArea');
             
             const galleryItems = document.querySelectorAll('.gallery-item');
 
@@ -1094,9 +1194,15 @@
                     const encodedMsg = encodeURIComponent(`Hello! I would like to inquire about: ${title} (${price}).`);
                     sModalWhatsappBtn.href = `https://wa.me/6282144567600?text=${encodedMsg}`;
 
+                    // Nuresetinam scrollą į viršų prieš atidarant
+                    serviceScrollArea.scrollTop = 0; 
+
                     serviceModal.classList.add('active');
                     serviceModal.setAttribute('aria-hidden', 'false');
                     document.body.style.overflow = 'hidden';
+
+                    // Tikriname scrollability šiek tiek uždelsę, kad CSS spėtų pritaikyti dydžius
+                    setTimeout(checkServiceScroll, 50);
                 });
             });
 
@@ -1107,7 +1213,7 @@
             });
 
             // ==========================================
-            // DIVE SITES MODAL (NAUJAS)
+            // DIVE SITES MODAL
             // ==========================================
             const siteModal = document.getElementById('siteModal');
             const siteModalTitle = document.getElementById('siteModalTitle');
@@ -1115,15 +1221,13 @@
             const siteModalBody = document.getElementById('siteModalBody');
             const siteModalWhatsappBtn = document.getElementById('siteModalWhatsappBtn');
             const siteCloseBtn = document.getElementById('siteModalCloseBtn');
+            const siteScrollArea = document.getElementById('siteScrollArea');
             
             const siteCards = document.querySelectorAll('.site-card');
 
             siteCards.forEach(card => {
                 card.addEventListener('click', () => {
-                    // Ištraukiame pavadinimą be numerio
                     const name = card.querySelector('.site-name').textContent.trim();
-                    
-                    // Ištraukiame paslėptus duomenis
                     const depth = card.querySelector('.site-depth').textContent.trim();
                     const descriptionHTML = card.querySelector('.site-description').innerHTML;
 
@@ -1134,9 +1238,13 @@
                     const encodedMsg = encodeURIComponent(`Hello! I am interested in diving at ${name}.`);
                     siteModalWhatsappBtn.href = `https://wa.me/6282144567600?text=${encodedMsg}`;
 
+                    siteScrollArea.scrollTop = 0;
+
                     siteModal.classList.add('active');
                     siteModal.setAttribute('aria-hidden', 'false');
                     document.body.style.overflow = 'hidden';
+
+                    setTimeout(checkSiteScroll, 50);
                 });
             });
 
