@@ -6,296 +6,311 @@
     <title>Master Scuba Center - Gili Air</title>
     
     <!-- Šriftai ir Ikonos -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* CSS Kintamieji: Duotone spalvos (Gali keisti atspalvius čia) */
+        /* CSS Kintamieji: Duotone spalvos */
         :root {
             --primary: #0090c5;
+            --primary-light: #4dc8f5;
+            --padi-red: #e31837;
             --text-light: #ffffff;
             --duotone-top: rgba(0, 40, 80, 0.85);
             --duotone-bottom: rgba(0, 110, 160, 0.75);
         }
 
-        /* Baziniai nustatymai (Panaikina visus tarpus) */
+        /* Baziniai nustatymai */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
-        body { background-color: #000; color: var(--text-light); overflow-x: hidden; }
+        body { background-color: #020d18; color: var(--text-light); overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
         
-        /* 0. Fiksuota viršutinė juosta */
+        /* 0. Fiksuota viršutinė juosta su Navigacija */
         header {
             position: fixed; top: 0; left: 0; width: 100%;
-            background: rgba(0, 0, 0, 1);
-            backdrop-filter: blur(5px);
-            z-index: 1000; padding: 12px 20px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 1000; padding: 10px 25px;
             display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* Header Logo dalis su PADI nuotrauka */
         .header-logo-container {
-            display: flex; align-items: center; gap: 12px;
+            display: flex; align-items: center; gap: 12px; z-index: 1001;
         }
-        .header-logo-container img {
-            height: 35px; width: auto; border-radius: 4px;
-        }
-        .header-logo-text { 
-            font-size: 1.1rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; 
-        }
+        .header-logo-container img { height: 35px; width: auto; border-radius: 4px; }
+        .header-logo-text { font-size: 1.1rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
         
+        /* Navigacijos Meniu */
+        .main-nav { display: flex; gap: 25px; }
+        .main-nav a {
+            font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+            color: #dce6ef; transition: color 0.2s;
+        }
+        .main-nav a:hover { color: var(--primary-light); }
+
+        .header-right { display: flex; align-items: center; gap: 15px; z-index: 1001; }
         .header-btn {
-            background: var(--primary); padding: 8px 16px; 
-            border-radius: 4px; font-weight: 600; font-size: 0.9rem;
+            background: var(--primary); padding: 8px 18px; 
+            border-radius: 4px; font-weight: 700; font-size: 0.9rem;
+            transition: background 0.2s ease;
+        }
+        .header-btn:hover { background: #00a8e6; }
+
+        /* Mobilus Meniu Mygtukas */
+        .mobile-menu-btn {
+            display: none; background: none; border: none; 
+            color: #fff; font-size: 1.5rem; cursor: pointer;
         }
 
         /* Pagrindinė pilno ekrano sekcijos klasė */
         .edge-section {
-            width: 100%;
-            min-height: 100vh;
+            width: 100%; min-height: 100vh;
             display: flex; flex-direction: column; 
             justify-content: center; align-items: center;
-            text-align: center; padding: 80px 20px;
+            text-align: center; padding: 100px 20px 80px;
             background-size: cover; background-position: center; background-repeat: no-repeat;
         }
 
         /* 1. Hero / Logo per vidurį */
         .section-hero {
-            background-image: linear-gradient(rgba(240, 235, 235, 0.25), rgba(0,0,0,0.4)), url('images/banner.jpg');
+            background-image: linear-gradient(rgba(240, 235, 235, 0.25), rgba(0,0,0,0.5)), url('images/banner.jpg');
         }
         .section-hero img { max-width: 90%; max-height: 200px; width: auto; margin-bottom: 25px; }
-        .section-hero h1 { font-size: 2.4rem; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2; margin-bottom: 5px; }
-        .hero-subtitle { font-size: 1.3rem; letter-spacing: 2px; font-weight: 400; color: #ddd; text-transform: uppercase;}
+        .section-hero h1 { font-size: 2.4rem; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2; margin-bottom: 5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);}
+        .hero-subtitle { font-size: 1.3rem; letter-spacing: 2px; font-weight: 500; color: #fff; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5);}
 
-        /* 2. Intro Duotone */
-        .section-intro {
-            background-image: linear-gradient(var(--duotone-top), var(--duotone-bottom)), url('images/pic01.jpg');
-            min-height: 70vh;
+        /* 2. SERVICES GRUPUOTA GALERIJA */
+        .section-services {
+            background-image: linear-gradient(to bottom, #020d18, #051c30);
+            min-height: auto; padding-top: 120px; padding-bottom: 80px;
         }
-        .intro-text { max-width: 800px; font-size: 1.3rem; line-height: 1.6; font-weight: 400; }
-        .intro-text h2 { font-size: 2.2rem; margin-bottom: 20px; font-weight: 800; text-transform: uppercase; }
+        .section-header { margin-bottom: 60px; max-width: 800px; }
+        .section-header h2 { font-size: 2.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        .section-header p { font-size: 1.1rem; color: #b0c4d8; line-height: 1.6; }
+        
+        .category-wrapper {
+            margin-bottom: 70px; width: 100%; 
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .category-title {
+            font-size: 1.6rem; color: var(--text-light); margin-bottom: 30px;
+            text-transform: uppercase; font-weight: 800; 
+            display: inline-block; padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary); letter-spacing: 1px;
+            text-align: center;
+        }
 
-        /* 3. Paslaugų 3x3 Tinklelis (9 kvadratai) */
-        .services-grid {
+        /* NAUJA: Grid tinklelio sistema kortelėms */
+        .gallery-row {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr); /* Telefone: 2 stulpeliai */
+            gap: 15px;
             width: 100%;
-        }
-        @media(min-width: 768px) {
-            .services-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-        /* Telefone (2 stulpeliuose) 9-asis kvadratas užima visą apatinę eilutę, kad neliktų tuščio tarpo */
-        @media(max-width: 767px) {
-            .service-square:nth-child(9) {
-                grid-column: span 2;
-                aspect-ratio: 2 / 1;
-            }
-        }
-        .service-square {
-            position: relative;
-            aspect-ratio: 1 / 1;
-            background-size: cover; background-position: center;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .service-square::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: rgba(0, 144, 197, 0);
-            transition: background 0.3s ease;
-            pointer-events: none;
-        }
-        .service-square:hover::after {
-            background: rgba(0, 144, 197, 0.18);
-        }
-        .service-title {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.65) 65%, transparent 100%);
-            padding: 45px 12px 16px; text-align: center;
-            display: flex; flex-direction: column; gap: 6px;
-            z-index: 2;
-        }
-        .service-title h3 { 
-            font-size: clamp(0.82rem, 1.4vw, 1.05rem); 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            line-height: 1.25; 
-        }
-        .service-title span { 
-            font-size: 0.8rem; 
-            color: var(--primary); 
-            font-weight: 700; 
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            max-width: 950px; /* Optimalus plotis kompiuteryje (priderintas prie Dive Sites) */
+            margin: 0 auto; /* Centruoja patį tinklelį ekrane */
         }
         
-        /* Paslėptas aprašymo blokas tinklelyje (naudojamas tik modaliniam langui) */
-        .service-description {
-            display: none;
+        @media(min-width: 768px) {
+            .gallery-row {
+                grid-template-columns: repeat(3, 1fr); /* Tablet / Kompiuteryje: 3 stulpeliai */
+                gap: 25px;
+            }
         }
 
-        /* Modalino lango (Popup) stilius */
-        .modal-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0, 12, 24, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: flex; justify-content: center; align-items: center;
-            padding: 20px;
-            opacity: 0; visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1; visibility: visible;
-        }
-        .modal-container {
-            background: linear-gradient(145deg, #041f3a 0%, #02101f 100%);
-            border: 1px solid rgba(0, 144, 197, 0.4);
-            border-top: 4px solid var(--primary);
-            border-radius: 12px;
-            width: 100%; max-width: 580px;
-            max-height: 88vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-            transform: translateY(20px) scale(0.96);
-            transition: transform 0.3s ease;
+        /* Kortelė */
+        .gallery-item {
             position: relative;
-            text-align: left;
-        }
-        .modal-overlay.active .modal-container {
-            transform: translateY(0) scale(1);
-        }
-        .modal-header-img {
-            width: 100%; height: 200px;
+            width: 100%; /* Užima visą grid'o stulpelį */
+            aspect-ratio: 3 / 4; /* Optimalus santykis telefonui */
             background-size: cover; background-position: center;
-            position: relative;
+            border-radius: 12px; overflow: hidden; cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
         }
-        .modal-header-img::after {
+        .gallery-item::before {
             content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to top, #041f3a 0%, transparent 100%);
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
+            transition: background 0.3s ease;
         }
-        .modal-close {
-            position: absolute; top: 15px; right: 15px;
-            width: 38px; height: 38px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #fff; font-size: 1.2rem;
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; z-index: 10;
-            transition: background 0.2s ease, transform 0.2s ease;
-        }
-        .modal-close:hover {
-            background: var(--primary);
-            transform: scale(1.08);
-        }
-        .modal-content {
-            padding: 5px 28px 30px;
-        }
-        .modal-badge {
-            display: inline-block;
-            background: rgba(0, 144, 197, 0.2);
-            color: #4dc8f5;
-            border: 1px solid rgba(0, 144, 197, 0.45);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-        .modal-title {
-            font-size: 1.4rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            line-height: 1.25;
-            margin-bottom: 16px;
-            color: #fff;
-        }
-        .modal-body {
-            font-size: 0.98rem;
-            line-height: 1.65;
-            color: #dce6ef;
-            margin-bottom: 24px;
-        }
-        .modal-body p { margin-bottom: 12px; }
-        .modal-body ul { margin: 10px 0 15px 20px; }
-        .modal-body li { margin-bottom: 6px; }
-        .modal-cta {
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%;
-            background: var(--primary);
-            color: #fff;
-            padding: 14px 20px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background 0.2s ease;
-        }
-        .modal-cta:hover {
-            background: #00a8e6;
+        .gallery-item:hover { transform: translateY(-5px); }
+        .gallery-item:hover::before { background: linear-gradient(to top, rgba(0,144,197,0.9) 0%, rgba(0,0,0,0.3) 65%, transparent 100%); }
+        
+        /* PADI Ženkliukas Kampe */
+        .padi-badge-corner {
+            position: absolute; top: 12px; right: 12px;
+            background: var(--padi-red); color: #fff;
+            padding: 4px 10px; border-radius: 4px;
+            font-size: 0.8rem; font-weight: 800; letter-spacing: 0.5px;
+            z-index: 3; box-shadow: 0 3px 10px rgba(0,0,0,0.5);
         }
 
-        /* 4. Private Course Duotone */
+        .gallery-content {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 20px 15px; text-align: left; z-index: 2;
+        }
+        .gallery-content h3 {
+            font-size: 1.15rem; font-weight: 800; text-transform: uppercase;
+            line-height: 1.25; margin-bottom: 10px; color: #fff;
+        }
+        .gallery-price {
+            display: inline-block; background: var(--primary); color: #fff;
+            padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 0.85rem;
+        }
+
+        /* Kompiuterių ekranams */
+        @media(min-width: 768px) {
+            .gallery-item {
+                aspect-ratio: 4 / 5; /* Truputį aukštesnis santykis PC ekrane */
+            }
+            .gallery-content { padding: 25px 20px; }
+            .gallery-content h3 { font-size: 1.25rem; }
+        }
+
+        /* Mažiesiems telefonų ekranams (teksto pritaikymas, kad 2 kortelės atrodytų gražiai) */
+        @media(max-width: 450px) {
+            .gallery-content h3 { font-size: 0.95rem; margin-bottom: 6px; }
+            .gallery-price { font-size: 0.75rem; padding: 3px 8px; }
+            .padi-badge-corner { font-size: 0.65rem; padding: 3px 6px; top: 8px; right: 8px; }
+        }
+
+        /* Paslėptas aprašymas (modalui) */
+        .service-description { display: none; }
+
+        /* 3. Private Course (Duotone) */
         .section-private {
             background-image: linear-gradient(var(--duotone-bottom), var(--duotone-top)), url('images/pic02.jpg');
             min-height: 60vh;
         }
+        .intro-text { max-width: 800px; font-size: 1.3rem; line-height: 1.6; font-weight: 400; }
+        .intro-text h2 { font-size: 2.2rem; margin-bottom: 20px; font-weight: 800; text-transform: uppercase; }
 
-        /* 5. Diving Sites - Su minimalistinėmis kortelėmis */
+        /* 4. Diving Sites */
         .section-sites {
-            background-image: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.4)), url('images/pic03.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('images/pic03.jpg');
             min-height: auto; padding-top: 100px; padding-bottom: 100px;
         }
-        .section-sites h2 { 
-            font-size: 2.5rem; margin-bottom: 40px; font-weight: 800; 
-            text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
-        }
+        .section-sites h2 { font-size: 2.5rem; margin-bottom: 40px; font-weight: 800; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         
         .sites-list {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
-            width: 100%; max-width: 950px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 950px;
         }
         @media(min-width: 768px) { .sites-list { grid-template-columns: repeat(3, 1fr); } }
         @media(min-width: 1024px) { .sites-list { grid-template-columns: repeat(4, 1fr); } }
         
-        /* Kortelės stilius */
         .site-card {
-            background: rgba(255, 255, 255, 0.92);
-            color: #222;
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-align: left;
-            border-left: 5px solid var(--primary);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
+            background: rgba(255, 255, 255, 0.92); color: #222;
+            padding: 14px 15px; border-radius: 8px; font-weight: 700; font-size: 0.9rem;
+            text-align: left; border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: transform 0.2s;
             display: flex; align-items: center;
+            cursor: pointer; /* Pridėtas pointeris, kad suprastų, jog paspaudžiama */
+            position: relative; /* Svarbu paslėptiems duomenims */
         }
         .site-card:hover { transform: translateY(-3px); }
-        .site-card span { color: var(--primary); margin-right: 8px; font-weight: 800; font-size: 0.8rem; }
+        .site-card span.site-number { color: var(--primary); margin-right: 8px; font-weight: 800; font-size: 0.8rem; }
+        
+        /* Paslėpti duomenys Dive Sites modalui */
+        .site-details { display: none; }
+
+        /* 5. About Us (Duotone) */
+        .section-about {
+            background-image: linear-gradient(var(--duotone-top), var(--duotone-bottom)), url('images/pic01.jpg');
+            min-height: 70vh;
+        }
 
         /* 6. Footer / Kontaktai */
         .section-contact {
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.95)), url('images/banner.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.98)), url('images/banner.jpg');
+            min-height: auto; padding-top: 80px; padding-bottom: 40px;
         }
         .section-contact h2 { font-size: 2.2rem; margin-bottom: 20px; font-weight: 800; text-transform: uppercase; }
+        
+        .social-icons { margin-bottom: 30px; }
         .social-icons a { 
-            display: inline-block; width: 55px; height: 55px; line-height: 55px;
-            background: rgba(255,255,255,0.15); border-radius: 50%; margin: 10px; font-size: 1.5rem;
-            transition: background 0.3s;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 55px; height: 55px; background: rgba(255,255,255,0.1); 
+            border-radius: 50%; margin: 10px; font-size: 1.5rem; color: #fff;
+            transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2);
         }
-        .social-icons a:hover { background: var(--primary); }
-        .contact-info { margin: 40px 0; font-size: 1.1rem; line-height: 2.5; text-align: left; display: inline-block; }
+        .social-icons a:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-3px); }
+        
+        .contact-info { margin: 20px 0; font-size: 1.1rem; line-height: 2.5; text-align: left; display: inline-block; }
         .contact-info i { color: var(--primary); margin-right: 15px; font-size: 1.3rem; width: 20px; text-align: center;}
-        .copyright { margin-top: 40px; font-size: 0.8rem; color: #888; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; width: 100%; }
+        .copyright { margin-top: 40px; font-size: 0.8rem; color: #888; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 100%; max-width: 600px; }
 
-        /* Mobiliesiems ekranams */
-        @media(max-width: 768px) {
+        /* Modalinis Langas (Bendras stilius) */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 12, 24, 0.85); backdrop-filter: blur(8px);
+            z-index: 2000; display: flex; justify-content: center; align-items: center; padding: 20px;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-container {
+            background: linear-gradient(145deg, #041f3a 0%, #02101f 100%);
+            border: 1px solid rgba(0, 144, 197, 0.4); border-top: 4px solid var(--primary);
+            border-radius: 12px; width: 100%; max-width: 580px; max-height: 88vh; overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); transform: translateY(20px) scale(0.96);
+            transition: transform 0.3s ease; position: relative; text-align: left;
+        }
+        .modal-overlay.active .modal-container { transform: translateY(0) scale(1); }
+        
+        .modal-header-img {
+            width: 100%; height: 180px; background-size: cover; background-position: center; position: relative;
+        }
+        .modal-header-img::after {
+            content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #041f3a 0%, transparent 100%);
+        }
+        /* Atskiras paveikslėlis Sites modalui (nes kortelės neturi fono nuotraukos) */
+        #siteModalImg {
+            background-image: url('images/pic03.jpg'); /* Default nuotrauka visoms vietoms */
+        }
+
+        .modal-close {
+            position: absolute; top: 15px; right: 15px; width: 38px; height: 38px;
+            border-radius: 50%; background: rgba(0, 0, 0, 0.65); border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff; font-size: 1.2rem; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 10; transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .modal-close:hover { background: var(--primary); transform: scale(1.08); }
+        .modal-content { padding: 5px 28px 30px; }
+        .modal-badge {
+            display: inline-block; background: rgba(0, 144, 197, 0.2); color: var(--primary-light);
+            border: 1px solid rgba(0, 144, 197, 0.45); padding: 5px 13px; border-radius: 20px;
+            font-size: 0.82rem; font-weight: 700; text-transform: uppercase; margin-bottom: 10px;
+        }
+        .modal-title { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; line-height: 1.25; margin-bottom: 16px; color: #fff; }
+        
+        /* Gylio informacija Sites modalui */
+        .site-depth-info {
+            display: flex; align-items: center; gap: 8px; margin-bottom: 15px;
+            font-size: 0.95rem; font-weight: 600; color: var(--primary-light);
+        }
+        .site-depth-info i { font-size: 1.1rem; }
+
+        .modal-body { font-size: 0.96rem; line-height: 1.65; color: #dce6ef; margin-bottom: 24px; }
+        .modal-body p { margin-bottom: 12px; }
+        .modal-body ul { margin: 10px 0 15px 20px; }
+        .modal-body li { margin-bottom: 6px; }
+        .modal-cta {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+            background: var(--primary); color: #fff; padding: 14px 20px; border-radius: 6px;
+            font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;
+            transition: background 0.2s ease;
+        }
+        .modal-cta:hover { background: #00a8e6; }
+
+        /* Mobiliesiems ekranams (Meniu) */
+        @media(max-width: 860px) {
+            .mobile-menu-btn { display: block; }
+            .main-nav {
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background: rgba(0, 0, 0, 0.95); flex-direction: column; gap: 0;
+                border-top: 1px solid rgba(255,255,255,0.1); display: none; 
+            }
+            .main-nav.active { display: flex; }
+            .main-nav a { padding: 15px 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .section-hero h1 { font-size: 1.8rem; }
             .header-logo-text { display: none; }
         }
@@ -303,250 +318,676 @@
 </head>
 <body>
 
-    <!-- 0. Fiksuota viršutinė juosta -->
+    <!-- 0. Fiksuota viršutinė juosta su Navigacija -->
     <header>
         <div class="header-logo-container">
             <img src="images/padi.jpg" alt="PADI">
             <span class="header-logo-text">Master Scuba</span>
         </div>
-        <a href="https://wa.me/6282144567600" target="_blank" class="header-btn">
-            <i class="fab fa-whatsapp"></i> Chat
-        </a>
+        
+        <nav class="main-nav" id="mainNav">
+            <a href="#services">Services</a>
+            <a href="#sites">Dive Sites</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="header-right">
+            <a href="https://wa.me/6282144567600" target="_blank" class="header-btn">
+                <i class="fab fa-whatsapp"></i> Chat
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
     </header>
 
-    <!-- 1. Hero sekcija (Nuotrauka + Centruotas Logo) -->
+    <!-- 1. Hero sekcija -->
     <section class="edge-section section-hero">
         <img src="images/logo.png" alt="Master Scuba Center Logo">
         <h1>Master Scuba Center</h1>
         <p class="hero-subtitle">Gili Air</p>
-        
     </section>
 
-    <!-- 2. Intro (Duotone stilius) -->
-    <section class="edge-section section-intro">
-        <div class="intro-text">
-            <h2>ABOUT US </h2>
-            <p>Located in the heart of the idyllic Gili Islands, Master Scuba Diver Resort on Gili Air offers world-class diving experiences for adventurers of all levels. Our dive sites are home to vibrant coral gardens, abundant marine life, and most famously—sea turtles. Dive alongside these gentle giants in their natural habitat, a daily highlight for many of our guests. With experienced PADI instructors, small group sizes, and a strong focus on safety and environmental awareness, we provide personalized dive adventures that are as enriching as they are unforgettable. Whether you're taking your first breaths underwater or advancing your dive education, Master Scuba Diver Resort is your gateway to the magic of Gili Air’s underwater world.</p>
-        </div>
-    </section>
-
-    <!-- 3. Paslaugų 3x3 Tinklelis (9 PADI programos) -->
-    <section class="services-grid">
-        
-        <!-- 1 KVADRATĖLIS -->
-        <div class="service-square" style="background-image: url('images/pic02.jpg');">
-            <div class="service-title">
-                <h3>PADI DISCOVER SCUBA DIVING PROGRAM</h3>
-                <span>€48 / 1-2 days</span>
-            </div>
-            <div class="service-description">
-                <p><strong>Your First Breath Underwater – Discover a Whole New World.</strong></p>
-                <p>Have you ever wondered what it feels like to breathe underwater? The PADI Discover Scuba Diving program is an introductory experience for people who want to try scuba diving without committing to a full certification course. A qualified PADI Professional explains the basic principles, helps you become familiar with the equipment, and directly supervises your underwater experience.</p>
-                <p><strong>What you will experience</strong><ul><li>An introduction to scuba equipment, basic diving principles, and underwater hand signals.</li><li>Practice with basic scuba skills in a suitable confined-water environment.</li><li>An optional open-water experience, where available and appropriate, under direct professional supervision.</li><li>An introduction to the marine environment and responsible ocean practices.</li></ul></p>
-                <p><strong>Course information</strong><ul><li>Minimum age: 10 years old.</li><li>Previous scuba experience: Not required.</li><li>Certification: No scuba certification is awarded.</li><li>Maximum depth: Up to 12 meters for an open-water dive, subject to program standards, age and conditions and instructor assessment.</li><li>Supervision: Direct supervision by a qualified PADI Professional.</li></ul></p>
-                <p><strong>Try scuba diving and discover the underwater world with MASTER SCUBA CENTER.</strong></p>
-            </div>
+    <!-- 2. Services & Price List (Tobulai sulygiuotas Grid) -->
+    <section id="services" class="edge-section section-services">
+        <div class="section-header">
+            <h2>Services &amp; Price List</h2>
+            <p>Explore our official PADI courses, guided dives, and private experiences around the Gili Islands.</p>
         </div>
 
-        <!-- 2 KVADRATĖLIS -->
-        <div class="service-square" style="background-image: url('images/pic01.jpg');">
-            <div class="service-title">
-                <h3>PADI SCUBA DIVER COURSE</h3>
-                <span>Contact Us</span>
-            </div>
-            <div class="service-description">
-                <p><strong>Take Your First Step Towards Becoming a Certified Scuba Diver.</strong></p>
-                <p>The PADI Scuba Diver course is designed for people who want a recognized entry-level certification but have limited time. It covers essential diving knowledge and skills and qualifies graduates to dive under the direct supervision of a PADI Divemaster or Instructor, within the limits of their certification.</p>
-                <p><strong>What you will learn</strong></p>
-                <ul><li>Basic scuba diving theory, pressure, breathing, and underwater safety.</li><li>Scuba equipment preparation and use.</li><li>Essential skills such as mask clearing, regulator recovery, and buoyancy control.</li><li>Underwater communication, safe procedures, and practical open-water skills.</li></ul>
-                <p><strong>Course information</strong></p>
-                <ul><li>Minimum age: 10 years old.</li><li>Previous experience: Not required.</li><li>Training: Knowledge development, three confined-water sessions, and two open-water dives.</li><li>Maximum depth: 12 Meters / 40 feet.</li><li>Certification: PADI Scuba Diver; dives require direct supervision by a PADI Divemaster or Instructor.</li></ul>
-                <p><strong>Continue your education later by upgrading to PADI Open Water Diver.</strong></p>
-
-            </div>
-        </div>
-
-        <!-- 3 KVADRATĖLIS -->
-        <div class="service-square" style="background-image: url('images/pic03.jpg');">
-            <div class="service-title">
-                <h3>PADI OPEN WATER DIVER COURSE</h3>
-                <span>€292 / 2-3 Days</span>
-            </div>
-            <div class="service-description">
-                <p><strong>Become a Certified Diver. Explore the Ocean. Discover Freedom Underwater.</strong></p>
-                <p>The PADI Open Water Diver course is the world’s best-known entry-level scuba certification. It teaches beginners the knowledge and practical skills needed to dive with a buddy, without direct professional supervision, within the limits of their training and certification.</p>
-                <p><strong>Your training journey</strong></p>
-                <ul><li>Knowledge development: diving physics and physiology, pressure and equalization, equipment, dive planning, safety, and environmental awareness.</li><li>Confined-water training: practice equipment use, mask clearing, regulator recovery, buoyancy, and other essential skills.</li><li>Open-water training: complete four training dives with an instructor and apply your skills in the ocean.</li></ul>
-                <p><strong>Course information</strong></p>
-                <p><ul><li>Minimum age: 10 years old.</li><li>Previous experience: Not required.</li><li>Training: Knowledge development, confined-water training, and four open-water dives.</li><li>Maximum depth after certification: 18 Meters / 60 feet for divers aged 15 and older; junior depth limits apply to younger divers.</li><li>Certification: PADI Open Water Diver.</li></ul></p>
-
-            </div>
-        </div>
-
-        <!-- 4 KVADRATĖLIS -->
-        <div class="service-square" style="background-image: url('images/pic04.jpg');">
-            <div class="service-title">
-                <h3>PADI ADVANCED OPEN WATER DIVER COURSE</h3>
-                <span>€195 / 2 Days</span>
-            </div>
-            <div class="service-description">
-                <p><strong>Take Your Diving Skills to the Next Level.</strong></p>
-                <p>The PADI Advanced Open Water Diver course helps certified divers build experience, improve confidence, and explore different types of diving. It is not simply about going deeper: it is an opportunity to practice new skills and broaden your underwater experience with an instructor.</p>
-                <P><strong>What you will experience</strong></P>
-                <ul><li>Five Adventure Dives, including the required Deep Adventure Dive and Underwater Navigation Adventure Dive.</li><li>Three additional Adventure Dives selected with your instructor from available options.</li><li>Depending on local conditions and availability, options may include Peak Performance Buoyancy, Fish Identification, Drift Diving, or Underwater Photography.</li></ul>
-                <p><strong>Course information</strong></p>
-                <ul><li>Prerequisite: PADI Open Water Diver or qualifying certification.</li><li>Minimum age: Generally, 12 years old; selected dives may have additional age requirements.</li><li>Training: Five Adventure Dives.</li><li>Deep Adventure Dive: Maximum 30 Meters for divers aged 15 and older; junior depth restrictions apply.</li><li>Certification: PADI Advanced Open Water Diver.</li></ul>
-                <p><strong>Discover more, build experience, and become a more confident diver.</strong></p>
-            </div>
-        </div>
-
-        <!-- 5 KVADRATĖLIS -->
-        <div class="service-square" style="background-image: url('images/pic05.jpg');">
-            <div class="service-title">
-                <h3>PADI RESCUE DIVER COURSE</h3>
-                <span>2 Days</span>
-            </div>
-            <div class="service-description">
-                <p><strong>Become a More Confident Diver. Learn to Help Others.</strong></p>
-                <p>The PADI Rescue Diver course develops a diver’s awareness, confidence, and ability to help prevent and manage diving problems. Students learn to recognize stress, assist other divers, and respond to a range of emergency situations through knowledge development, rescue exercises, and realistic scenarios.</p>
-                <p><strong>What you will learn</strong></p>
-                <ul><li>Recognising and managing diver stress and preventing incidents.</li><li>Assisting tired or panicked divers.</li><li>Responding to underwater emergencies and missing-diver situations.</li><li>Rescue techniques for unresponsive divers and emergency response planning.</li></ul>
-                <p><strong>Course information</strong></p>
-                <ul><li>Minimum age: 12 years old for Junior Rescue Diver; 15 years old for Rescue Diver.</li><li>Prerequisite: PADI Advanced Open Water Diver or qualifying certification.</li><li>CPR and first aid: Current training within the previous 24 months.</li><li>Other requirements: Meet applicable medical and course requirements.</li><li>Certification: PADI Rescue Diver, subject to successful completion.</li></ul>
-                <p><strong>Become a better buddy and a safer, more capable diver.</strong></p>
-            </div>
-        </div>
-
-        <!-- 6 KVADRATĖLIS -->
-        <div class="service-square" style="background-image: url('images/pic02.jpg');">
-            <div class="service-title">
-                <h3>EMERGENCY FIRST RESPONSE (EFR)</h3>
-                <span>1 Day</span>
-            </div>
-            <div class="service-description">
-                <p><strong>Be Prepared. Be Confident. Make a Difference.</strong></p>
-                <p>Emergency First Response training teaches practical first aid and CPR skills for responding to medical emergencies. The courses are suitable for divers and non-divers and focus on building the confidence to provide care until professional medical assistance is available.</p>
-                <p><strong>Primary Care (CPR)</strong></p>
-                <ul><li>Assessing an emergency and checking responsiveness and breathing.</li><li>Performing CPR and using an AED where available and appropriate.</li><li>Managing serious bleeding and providing care for shock.</li></ul>
-                <p><strong>Secondary Care (First Aid)</strong></p>
-                <ul><li>Assessing injuries and illnesses that are not immediately life-threatening.</li><li>Providing basic wound care and bandaging.</li><li>Recognizing and managing common first-aid situations, including sprains and fractures.</li></ul>
-                <p><strong>Practical training</strong></p>
-                <p>Students practice skills and work through realistic scenarios with an EFR Instructor.</p>
-                <p><strong>Course information</strong></p>
-                <ul><li>Suitable for: Divers and non-divers.</li><li>Previous experience: Not required for the standard EFR courses.</li><li>Training: Primary Care and Secondary Care, as applicable.</li><li>Certification: Emergency First Response certification upon successful completion.</li></ul>
-                <p><strong>Learn essential first-aid skills and be ready to help when it matters.</strong></p>
-            </div>
-        </div>
-
-        <!-- 7 KVADRATĖLIS -->
-        <div class="service-square" style="background-image: url('images/pic06.jpg');">
-            <div class="service-title">
-                <h3>PADI DIVEMASTER COURSE</h3>
-                <span>Go Pro</span>
-            </div>
-            <div class="service-description">
-                <p><strong>Turn Your Passion for Diving into a Professional Career.</strong></p>
-                <p>The PADI Divemaster course is the first professional-level certification in the PADI recreational diving system. It is designed for experienced divers who want to develop leadership, assist with diver training, and supervise certain recreational diving activities within PADI standards and local regulations.</p>
-                <p><strong>What you will develop</strong></p>
-                <ul><li>Dive knowledge: physics, physiology, equipment, decompression theory, planning, and risk management. Water skills: stamina, rescue skills, and strong personal diving ability.</li><li>Dive leadership: organizing activities, conducting briefings, supervising divers, and assisting instructors.</li><li>Practical experience: learn about dive-center operations and professional responsibilities in a real resort environment.</li></ul>
-                <p><strong>Course information</strong></p>
-                <ul><li>Minimum age: 18 years old.</li><li>Prerequisites: PADI Rescue Diver or qualifying certification, and qualifying Advanced-level training.</li><li>EFR Primary and Secondary Care: Current within the previous 24 months.</li><li>Logged dives: At least 40 to begin and 60 to qualify for certification.</li><li>Also required: Current medical statement and all applicable PADI prerequisites.</li><li>Certification: PADI Divemaster, upon successful completion.</li></ul>
-                <p><strong>Build your skills, develop your leadership, and take the first step towards a diving career.</strong></p>
-            </div>
-        </div>
-
-        <!-- 8 KVADRATĖLIS -->
-        <div class="service-square" style="background-image: url('images/pic01.jpg');">
-            <div class="service-title">
-                <h3>SCUBA TUNE-UP / REFRESHER PROGRAM</h3>
-                <span>From €26</span>
-            </div>
-            <div class="service-description">
-                <p><strong>Refresh Your Skills. Rebuild Your Confidence. Get Back Underwater.</strong></p>
-                <p>Have you been away from scuba diving for a while? The Scuba Tune-Up / Refresher program helps certified divers review essential knowledge and practical skills before returning to the ocean. An instructor can tailor the session to your experience, comfort, and needs.</p>
-                <p><strong>What you can refresh</strong></p>
-                <ul><li>Scuba equipment assembly and safety checks.</li><li>Basic diving knowledge, safety procedures, and underwater communication.</li><li>Regulator recovery and clearing, mask clearing, and buoyancy control.</li><li>Entry and exit techniques and basic emergency procedures.</li></ul>
-                <p><strong>Course information</strong></p>
-                <ul><li>Previous certification: Required.</li><li>Designed for: Certified divers who have not dived recently or want extra practice.</li><li>Training: Knowledge review and practical in-water skills, tailored to the diver.</li><li>Certification: A general refresher is not a new certification. PADI Re-Activate recognition may be available when completed under the applicable program requirements.</li></ul>
-                <p><strong>Get back in the water with renewed confidence. A refresher does not replace required training or certification.</strong></p>
-            </div>
-        </div>
-
-        <!-- 9 KVADRATĖLIS -->
-        <div class="service-square" style="background-image: url('images/pic03.jpg');">
-            <div class="service-title">
-                <h3>PADI BUBBLEMAKER PROGRAM</h3>
+        <!-- BEGINNERS GROUP -->
+        <div class="category-wrapper">
+            <h3 class="category-title">Try Diving - Beginners</h3>
+            <div class="gallery-row">
                 
-                <span>1-2 days - For Kids</span>
+                <div class="gallery-item" style="background-image: url('images/pic02.jpg');">
+                    <div class="padi-badge-corner">PADI DSD</div>
+                    <div class="gallery-content">
+                        <h3>Discover Scuba Dive</h3>
+                        <span class="gallery-price">IDR 1.000.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Your First Breath Underwater – Discover a Whole New World.</strong></p>
+                        <p>Have you ever wondered what it feels like to breathe underwater? The PADI Discover Scuba Diving program is an introductory experience for people who want to try scuba diving without committing to a full certification course. A qualified PADI Professional explains the basic principles, helps you become familiar with the equipment, and directly supervises your underwater experience.</p>
+                        <p><strong>What you will experience</strong></p>
+                        <ul>
+                            <li>An introduction to scuba equipment, basic diving principles, and underwater hand signals.</li>
+                            <li>Practice with basic scuba skills in a suitable confined-water environment.</li>
+                            <li>An optional open-water experience, where available and appropriate, under direct professional supervision.</li>
+                            <li>An introduction to the marine environment and responsible ocean practices.</li>
+                        </ul>
+                        <p><strong>Course information</strong></p>
+                        <ul>
+                            <li>Minimum age: 10 years old.</li>
+                            <li>Previous scuba experience: Not required.</li>
+                            <li>Certification: No scuba certification is awarded.</li>
+                            <li>Maximum depth: Up to 12 meters.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic08.jpeg');">
+                    <div class="gallery-content">
+                        <h3>+ Additional Dive</h3>
+                        <span class="gallery-price">IDR 700.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Loved Your First Dive? Keep Exploring!</strong></p>
+                        <p>After completing your initial Discover Scuba Dive, you can add an extra guided open-water dive to explore another stunning Gili Islands reef site under the direct supervision of your PADI Instructor.</p>
+                        <ul>
+                            <li>Prerequisite: Completion of the initial Discover Scuba Diving session.</li>
+                            <li>Maximum depth: Up to 12 meters.</li>
+                            <li>Includes: Full scuba equipment and PADI Professional guidance.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic09.jpeg');">
+                    <div class="padi-badge-corner">PADI Kids</div>
+                    <div class="gallery-content">
+                        <h3>Bubblemaker</h3>
+                        <span class="gallery-price">IDR 900.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Big Adventures for Little Ocean Explorers!</strong></p>
+                        <p>The PADI Bubblemaker program introduces children to the fun of scuba diving in a controlled, enjoyable environment. Children learn how scuba equipment works and experience breathing underwater under the direct supervision of a qualified PADI Professional.</p>
+                        <p><strong>What children will experience</strong></p>
+                        <ul>
+                            <li>An introduction to scuba equipment and basic underwater awareness.</li>
+                            <li>Learning to breathe underwater and make bubbles.</li>
+                            <li>Enjoying simple, age-appropriate underwater activities.</li>
+                        </ul>
+                        <p><strong>Course information</strong></p>
+                        <ul>
+                            <li>Minimum age: 8 years old.</li>
+                            <li>Maximum depth: 2 Meters / 6 feet.</li>
+                            <li>Environment: Swimming pool or suitable confined-water environment.</li>
+                            <li>Supervision: Direct supervision by a qualified PADI Professional.</li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
-            <div class="service-description">
-                <p><strong>Big Adventures for Little Ocean Explorers!</strong></p>
-                <p>The PADI Bubblemaker program introduces children to the fun of scuba diving in a controlled, enjoyable environment. Children learn how scuba equipment works and experience breathing underwater under the direct supervision of a qualified PADI Professional.</p>
-                <p><strong>What children will experience</strong></p>
-                <ul><li>An introduction to scuba equipment and basic underwater awareness.</li><li>Learning to breathe underwater and make bubbles.</li><li>Enjoying simple, age-appropriate underwater activities.</li><li>Discovering the excitement of scuba diving in a safe, controlled setting.</li></ul>
-                <p><strong>Course information</strong></p>
-                <ul><li>Minimum age: 8 years old.</li><li>Previous experience: Not required.</li><li>Maximum depth: 2 Meters / 6 feet.</li><li>Environment: Swimming pool or suitable confined-water environment.</li><li>Supervision: Direct supervision by a qualified PADI Professional.</li><li>Recognition: PADI Bubblemaker recognition; this is not a scuba certification.</li></ul>
-                <p><strong>Give young explorers a fun first taste of the underwater world.</strong></p>
+        </div>
+
+        <!-- DIVE COURSES GROUP -->
+        <div class="category-wrapper">
+            <h3 class="category-title">Dive Courses</h3>
+            <div class="gallery-row">
+
+                <div class="gallery-item" style="background-image: url('images/pic01.jpg');">
+                    <div class="padi-badge-corner">PADI SD</div>
+                    <div class="gallery-content">
+                        <h3>Scuba Diver</h3>
+                        <span class="gallery-price">IDR 4.600.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Take Your First Step Towards Becoming a Certified Scuba Diver.</strong></p>
+                        <p>The PADI Scuba Diver course is designed for people who want a recognized entry-level certification but have limited time. It covers essential diving knowledge and skills and qualifies graduates to dive under the direct supervision of a PADI Divemaster or Instructor, within the limits of their certification.</p>
+                        <p><strong>What you will learn</strong></p>
+                        <ul>
+                            <li>Basic scuba diving theory, pressure, breathing, and underwater safety.</li>
+                            <li>Scuba equipment preparation and use.</li>
+                            <li>Essential skills such as mask clearing, regulator recovery, and buoyancy control.</li>
+                        </ul>
+                        <p><strong>Course information</strong></p>
+                        <ul>
+                            <li>Minimum age: 10 years old.</li>
+                            <li>Training: Knowledge development, three confined-water sessions, and two open-water dives.</li>
+                            <li>Maximum depth: 12 Meters / 40 feet.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic03.jpg');">
+                    <div class="padi-badge-corner">PADI OWD</div>
+                    <div class="gallery-content">
+                        <h3>Open Water Diver</h3>
+                        <span class="gallery-price">IDR 6.400.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Become a Certified Diver. Explore the Ocean. Discover Freedom Underwater.</strong></p>
+                        <p>The PADI Open Water Diver course is the world’s best-known entry-level scuba certification. It teaches beginners the knowledge and practical skills needed to dive with a buddy, without direct professional supervision, within the limits of their training and certification.</p>
+                        <p><strong>Your training journey</strong></p>
+                        <ul>
+                            <li>Knowledge development: diving physics and physiology, pressure and equalization, equipment, dive planning, safety, and environmental awareness.</li>
+                            <li>Confined-water training: practice equipment use, mask clearing, regulator recovery, buoyancy, and other essential skills.</li>
+                            <li>Open-water training: complete four training dives with an instructor and apply your skills in the ocean.</li>
+                        </ul>
+                        <p><strong>Course information</strong></p>
+                        <ul>
+                            <li>Minimum age: 10 years old.</li>
+                            <li>Maximum depth after certification: 18 Meters / 60 feet (junior depth limits apply to younger divers).</li>
+                            <li>Certification: PADI Open Water Diver.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic04.jpg');">
+                    <div class="padi-badge-corner">PADI AOWD</div>
+                    <div class="gallery-content">
+                        <h3>Advanced Diver</h3>
+                        <span class="gallery-price">IDR 5.400.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Take Your Diving Skills to the Next Level.</strong></p>
+                        <p>The PADI Advanced Open Water Diver course helps certified divers build experience, improve confidence, and explore different types of diving. It is not simply about going deeper: it is an opportunity to practice new skills and broaden your underwater experience with an instructor.</p>
+                        <p><strong>What you will experience</strong></p>
+                        <ul>
+                            <li>Five Adventure Dives, including the required Deep Adventure Dive and Underwater Navigation Adventure Dive.</li>
+                            <li>Three additional Adventure Dives selected with your instructor from available options.</li>
+                        </ul>
+                        <p><strong>Course information</strong></p>
+                        <ul>
+                            <li>Prerequisite: PADI Open Water Diver or qualifying certification.</li>
+                            <li>Deep Adventure Dive: Maximum 30 Meters.</li>
+                            <li>Certification: PADI Advanced Open Water Diver.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic05.jpg');">
+                    <div class="padi-badge-corner">RESCUE+EFR</div>
+                    <div class="gallery-content">
+                        <h3>Rescue &amp; EFR</h3>
+                        <span class="gallery-price">IDR 8.400.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Become a More Confident Diver. Learn to Help Others.</strong></p>
+                        <p>The PADI Rescue Diver course develops a diver’s awareness, confidence, and ability to help prevent and manage diving problems. Students learn to recognize stress, assist other divers, and respond to a range of emergency situations through knowledge development, rescue exercises, and realistic scenarios.</p>
+                        <p><strong>What you will learn</strong></p>
+                        <ul>
+                            <li>Recognising and managing diver stress and preventing incidents.</li>
+                            <li>Assisting tired or panicked divers.</li>
+                            <li>Responding to underwater emergencies and missing-diver situations.</li>
+                            <li>Emergency First Response (EFR): Primary Care (CPR) and Secondary Care (First Aid).</li>
+                        </ul>
+                        <p><strong>Course information</strong></p>
+                        <ul>
+                            <li>Prerequisite: PADI Advanced Open Water Diver or qualifying certification.</li>
+                            <li>Certification: PADI Rescue Diver & Emergency First Response.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic06.jpg');">
+                    <div class="padi-badge-corner">PADI DM</div>
+                    <div class="gallery-content">
+                        <h3>Divemaster</h3>
+                        <span class="gallery-price">IDR 20.500.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Turn Your Passion for Diving into a Professional Career.</strong></p>
+                        <p>The PADI Divemaster course is the first professional-level certification in the PADI recreational diving system. It is designed for experienced divers who want to develop leadership, assist with diver training, and supervise certain recreational diving activities within PADI standards and local regulations.</p>
+                        <p><strong>What you will develop</strong></p>
+                        <ul>
+                            <li>Dive knowledge: physics, physiology, equipment, decompression theory, planning, and risk management.</li>
+                            <li>Dive leadership: organizing activities, conducting briefings, supervising divers, and assisting instructors.</li>
+                            <li>Practical experience: learn about dive-center operations and professional responsibilities in a real resort environment.</li>
+                        </ul>
+                        <p><strong>Course information</strong></p>
+                        <ul>
+                            <li>Minimum age: 18 years old.</li>
+                            <li>Prerequisites: PADI Rescue Diver, EFR (within 24 months), at least 40 logged dives to begin.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CERTIFIED DIVER GROUP -->
+        <div class="category-wrapper">
+            <h3 class="category-title">Certified Diver</h3>
+            <div class="gallery-row">
+
+                <div class="gallery-item" style="background-image: url('images/pic11.jpeg');">
+                    <div class="gallery-content">
+                        <h3>Fun Dive</h3>
+                        <span class="gallery-price">IDR 590.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Explore the Vibrant Reefs of the Gilis.</strong></p>
+                        <p>Already certified? Join our experienced PADI Divemasters for unforgettable guided boat dives across iconic dive sites surrounding the three Gili Islands.</p>
+                        <ul>
+                            <li>Includes full scuba equipment rental, boat trip, professional dive guide.</li>
+                            <li>Prerequisite: Valid Open Water Diver certification (or equivalent).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic04.jpg');">
+                    <div class="gallery-content">
+                        <h3>Night Dive</h3>
+                        <span class="gallery-price">IDR 700.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Experience the Reef After Sunset.</strong></p>
+                        <p>Watch the underwater world transform as nocturnal creatures come out to hunt. On a guided Night Dive around the Gili Islands, you can spot sleeping sea turtles, Spanish dancers, cuttlefish, and glowing bioluminescence.</p>
+                        <ul>
+                            <li>Includes full scuba gear, underwater torch, boat trip, and professional guide.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic12.jpeg');">
+                    <div class="gallery-content">
+                        <h3>Adventure Dive</h3>
+                        <span class="gallery-price">IDR 1.000.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Try a New Diving Specialty & Gain Credit.</strong></p>
+                        <p>Want to dive deeper (up to 30m) or try Underwater Navigation without committing to the full 2-day Advanced course? Complete a single PADI Adventure Dive with an instructor.</p>
+                        <ul>
+                            <li>Counts as credit toward your PADI Advanced Open Water Diver certification.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic13.jpeg');">
+                    <div class="padi-badge-corner">RE-ACTIVATE</div>
+                    <div class="gallery-content">
+                        <h3>Refresher</h3>
+                        <span class="gallery-price">IDR 900.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Refresh Your Skills. Rebuild Your Confidence. Get Back Underwater.</strong></p>
+                        <p>Have you been away from scuba diving for a while? The Scuba Tune-Up / Refresher program helps certified divers review essential knowledge and practical skills before returning to the ocean.</p>
+                        <p><strong>What you can refresh</strong></p>
+                        <ul>
+                            <li>Scuba equipment assembly and safety checks.</li>
+                            <li>Basic diving knowledge, safety procedures, and underwater communication.</li>
+                            <li>Regulator recovery, mask clearing, and buoyancy control.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- SPECIALTIES GROUP -->
+        <div class="category-wrapper">
+            <h3 class="category-title">Specialty Dive Courses</h3>
+            <div class="gallery-row">
+
+                <div class="gallery-item" style="background-image: url('images/pic14.jpeg');">
+                    <div class="padi-badge-corner">PADI EANx</div>
+                    <div class="gallery-content">
+                        <h3>Nitrox Course</h3>
+                        <span class="gallery-price">IDR 3.500.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>PADI Enriched Air (Nitrox) Diver Course – Extend Your Bottom Time.</strong></p>
+                        <p>The PADI Enriched Air Diver course is PADI’s most popular specialty scuba course. Diving with enriched air nitrox gives you more no-decompression time, especially on repetitive scuba dives.</p>
+                        <ul>
+                            <li>2 Enriched Air Dives included.</li>
+                            <li>1 Official PADI Enriched Air (Nitrox) Certificate.</li>
+                            <li>Prerequisite: PADI Open Water Diver certification.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic16.jpeg');">
+                    <div class="padi-badge-corner">AOWD + EANx</div>
+                    <div class="gallery-content">
+                        <h3>Advanced &amp; Nitrox</h3>
+                        <span class="gallery-price">IDR 7.500.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Ultimate Combo Package: PADI Advanced Open Water + Enriched Air Nitrox.</strong></p>
+                        <p>Combine two of the most valuable PADI certifications into one seamless training package and save! Expand your depth limit to 30 meters while enjoying extended bottom times with Enriched Air Nitrox.</p>
+                        <ul>
+                            <li>6 Training Dives exploring top Gili Islands dive sites.</li>
+                            <li>2 Official PADI Certifications: PADI Advanced Open Water Diver & PADI Enriched Air (Nitrox) Diver.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- EXTRAS GROUP -->
+        <div class="category-wrapper">
+            <h3 class="category-title">Extras &amp; Add-ons</h3>
+            <div class="gallery-row">
+
+                <div class="gallery-item" style="background-image: url('images/pic17.jpeg');">
+                    <div class="gallery-content">
+                        <h3>Private Boat Dive</h3>
+                        <span class="gallery-price">Contact Us</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Exclusive Private Boat & Personal Dive Guide.</strong></p>
+                        <p>For divers seeking an exclusive, flexible, and personalized experience, our <strong>Private Boat Dive</strong> package is tailored entirely to your preferences.</p>
+                        <ul><li><strong>Customized Itinerary:</strong> Choose your own preferred dive sites based on what you want to see (subject to natural conditions and safety assessments).</li>
+                        <li><strong>Complete Privacy:</strong> Enjoy the boat and dive guide entirely for yourself or your private group without joining other divers.</li>
+                        <li><strong>Included:</strong> All top-tier scuba equipment and a dedicated private divemaster are fully included in the package.</li> </ul>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic18.jpg');">
+                    <div class="gallery-content">
+                        <h3>Snorkeling</h3>
+                        <span class="gallery-price">IDR 200.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Snorkeling Around Gili Air.</strong></p>
+                        <p>Not ready to scuba dive or traveling with non-diving friends? Join our boat or rent high-quality snorkeling gear (mask, snorkel, fins, and life jacket if needed) to swim alongside Gili Air's famous sea turtles and colorful shallow coral gardens.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" style="background-image: url('images/pic19.jpg');">
+                    <div class="gallery-content">
+                        <h3>UW Camera</h3>
+                        <span class="gallery-price">IDR 250.000</span>
+                    </div>
+                    <div class="service-description">
+                        <p><strong>Underwater Camera Rental – Capture Your Memories!</strong></p>
+                        <p>Take home high-resolution photos and videos of your dives with sea turtles, sharks, and coral reefs. Rent our underwater camera with deep-water housing for your dive or course.</p>
+                        <ul>
+                            <li>Direct transfer of photos and videos to your phone after the dive.</li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
 
     </section>
 
-    <!-- 4. Private Course (Duotone stilius) -->
+    <!-- 3. Private Course (Duotone) -->
     <section class="edge-section section-private">
         <div class="intro-text">
             <h2>Private Experience</h2>
             <p>Looking for a more personalized adventure? Book a private dive guide or instructor and explore the underwater world at your own pace, tailored exactly to your needs.</p>
-            <p><strong>Private Dive boat</strong></p>
-            <p><strong>Private DM/Instructor</strong></p>
+            <br>
+            <p><strong>Private Dive Boat • Private DM / Instructor</strong></p>
         </div>
     </section>
 
-    <!-- 5. Diving Sites su Kortelėmis -->
-    <section class="edge-section section-sites" id="sites">
-        <div class="intro-text">
-        <h1>DIVE AROUND THE THREE GILIS</h1>
-        <p>MASTER SCUBA CENTER is based on Gili Air Island, with diving activities around Gili Air, Gili Trawangan, and Gili Meno. The three islands offer a variety of tropical underwater environments and dive experiences.</p>
+    <!-- 4. Diving Sites -->
+    <section id="sites" class="edge-section section-sites">
+        <div class="intro-text" style="margin-bottom: 20px;">
+            <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 15px;">DIVE AROUND THE THREE GILIS</h1>
+            <p>MASTER SCUBA CENTER is based on Gili Air Island, with diving activities around Gili Air, Gili Trawangan, and Gili Meno. The three islands offer a variety of tropical underwater environments.</p>
         </div>
-        <div class="intro-text">
-            <p>|</p>
-        </div>
-        <h2>Diving Sites</h2>
+        
+        <h2>Dive Sites</h2>
         
         <div class="sites-list">
-            <div class="site-card"><span>01.</span> Turtle Heaven</div>
-            <div class="site-card"><span>02.</span> Shark Point</div>
-            <div class="site-card"><span>03.</span> Halik Reef</div>
-            <div class="site-card"><span>04.</span> Deep Turbo</div>
-            <div class="site-card"><span>05.</span> Shallow Turbo</div>
-            <div class="site-card"><span>06.</span> Han's Reef</div>
-            <div class="site-card"><span>07.</span> Meno Wall</div>
-            <div class="site-card"><span>08.</span> Bounty Wreck</div>
-            <div class="site-card"><span>09.</span> Air Slope</div>
-            <div class="site-card"><span>10.</span> Sunset Reef</div>
-            <div class="site-card"><span>11.</span> Harbor</div>
-            <div class="site-card"><span>12.</span> Secret Reef</div>
-            <div class="site-card"><span>13.</span> Good Heart Reef</div>
-            <div class="site-card"><span>14.</span> Taket Malang</div>
-            <div class="site-card"><span>15.</span> Air Wall</div>
-            <div class="site-card"><span>16.</span> Bongkas Air</div>
-            <div class="site-card"><span>17.</span> Simone Reef</div>
-            <div class="site-card"><span>18.</span> Bongkas Meno</div>
-            <div class="site-card"><span>19.</span> Meno Slope</div>
-            <div class="site-card"><span>20.</span> Biorock</div>
-            <div class="site-card"><span>21.</span> Glen Nusa</div>
+            
+            <!-- Site 01 -->
+            <div class="site-card">
+                <span class="site-number">01.</span> <span class="site-name">Turtle Heaven</span>
+                <div class="site-details">
+                    <div class="site-depth">5 – 35 meters</div>
+                    <div class="site-description">
+                        Turtle Heaven is a renowned dive site northeast of Gili Meno, famous for its submerged pinnacle and abundant green and hawksbill sea turtles. The gentle slopes are covered in hard and soft corals and feature multiple turtle cleaning stations. With manageable currents and excellent visibility, it is suitable for divers of all certification levels and offers prime opportunities for underwater macro photography.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 02 -->
+            <div class="site-card">
+                <span class="site-number">02.</span> <span class="site-name">Shark Point</span>
+                <div class="site-details">
+                    <div class="site-depth">5 – 40+ meters</div>
+                    <div class="site-description">
+                        Located off the northwest coast of Gili Trawangan, Shark Point features a flat sandy bottom that turns into progressively deeper canyons and ridges. This exhilarating drift dive site is famous for its resident white-tip and black-tip reef sharks, eagle rays, and large schools of pelagic fish like trevally and barracuda. Due to potentially strong currents, it is best suited for experienced and advanced divers.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 03 -->
+            <div class="site-card">
+                <span class="site-number">03.</span> <span class="site-name">Halik Reef</span>
+                <div class="site-details">
+                    <div class="site-depth">5 – 40 meters</div>
+                    <div class="site-description">
+                        Halik Reef offers a stunning steep slope on the north side of Gili Trawangan, progressing into deep parallel ridges (Deep Halik) at its base. The site boasts pristine coral formations, gorgonian fans, and an abundance of marine life including turtles, octopus, and seasonal schools of bumphead parrotfish. The deeper gullies serve as a sanctuary for juvenile sharks, making it an excellent multi-level drift dive.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 04 -->
+            <div class="site-card">
+                <span class="site-number">04.</span> <span class="site-name">Deep Turbo</span>
+                <div class="site-details">
+                    <div class="site-depth">18 – 40+ meters</div>
+                    <div class="site-description">
+                        Deep Turbo is an advanced drift dive situated in open water northeast of Gili Trawangan. It features dramatic underwater topography with massive coral pinnacles and sea mounds towering from a 30-meter sandy bottom. Swept by strong oceanic currents, the site is adorned with massive gorgonian sea fans and attracts pelagic fish, eagle rays, and reef sharks. Nitrox certification is highly recommended.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 05 -->
+            <div class="site-card">
+                <span class="site-number">05.</span> <span class="site-name">Shallow Turbo</span>
+                <div class="site-details">
+                    <div class="site-depth">5 – 25 meters</div>
+                    <div class="site-description">
+                        Shallow Turbo offers a relaxed drift diving experience with a white sandy bottom interspersed with spectacular, diverse coral bommies. Located northeast of Gili Trawangan, its manageable currents and shallow profile (rarely dipping below 18m) make it ideal for all certification levels. The site is a haven for invertebrate macro life, unicorn fish, scorpionfish, trumpet fish, and consistent sea turtle sightings.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 06 -->
+            <div class="site-card">
+                <span class="site-number">06.</span> <span class="site-name">Han's Reef</span>
+                <div class="site-details">
+                    <div class="site-depth">6 – 25 meters</div>
+                    <div class="site-description">
+                        Han's Reef on the northeast coast of Gili Air is a macro photographer's dream. The site features a gently sloping sandy plain dotted with vibrant coral outcroppings and a central mound. It is renowned for diverse benthic life, including frogfish, snake eels, blue-spotted stingrays, and mantis shrimp. It also serves as an exceptional night diving location for spotting nocturnal cephalopods. Suitable for all levels.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 07 -->
+            <div class="site-card">
+                <span class="site-number">07.</span> <span class="site-name">Meno Wall</span>
+                <div class="site-details">
+                    <div class="site-depth">5 – 30 meters</div>
+                    <div class="site-description">
+                        Meno Wall is a stunning wall dive featuring a stepped vertical drop decorated with overhangs and crevices. Located off the northwest coast of Gili Meno, the wall is encrusted with sponges and soft corals, providing shelter for moray eels, lionfish, and a variety of crustaceans. It is highly regarded as an exceptional night dive and a fast drift dive. Suitable for divers of all levels.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 08 -->
+            <div class="site-card">
+                <span class="site-number">08.</span> <span class="site-name">Bounty Wreck</span>
+                <div class="site-details">
+                    <div class="site-depth">8 – 25 meters</div>
+                    <div class="site-description">
+                        Bounty Wreck is a large collapsed pier pontoon that sank in a storm around 1999-2002 off the southwest coast of Gili Meno. Now fully transformed into an artificial reef, the structure lies between 8 and 25 meters. It attracts dense schools of drummerfish and glassfish, and is a prime spot for macro photography featuring well-camouflaged frogfish, ghost pipefish, and scorpionfish. Suitable for all divers.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 09 -->
+            <div class="site-card">
+                <span class="site-number">09.</span> <span class="site-name">Air Slope</span>
+                <div class="site-details">
+                    <div class="site-depth">5 – 25 meters</div>
+                    <div class="site-description">
+                        Air Slope is a gentle, sloping coral reef located on the eastern coast of Gili Air. Known for its relaxing drift diving conditions, the site features a mix of hard and soft coral blocks, barrel sponges, and sea whips. Divers can expect regular sightings of green turtles, boxfish, angelfish, sweetlips, and ghost pipefish. The calm conditions make it a perfect site for beginners and training dives.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 10 -->
+            <div class="site-card">
+                <span class="site-number">10.</span> <span class="site-name">Sunset Reef</span>
+                <div class="site-details">
+                    <div class="site-depth">8 – 25 meters</div>
+                    <div class="site-description">
+                        Sunset Reef is a sprawling, gently sloping coral garden on the southwest coast of Gili Trawangan. The shallows are dominated by massive Acropora table corals, while the deeper sandy bottoms host resting white-tip reef sharks. During the wet season (December to March), it is one of the most reliable sites in the area to encounter pelagic manta rays. The mild currents make it suitable for all levels.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 11 -->
+            <div class="site-card">
+                <span class="site-number">11.</span> <span class="site-name">Harbor</span>
+                <div class="site-details">
+                    <div class="site-depth">8 – 25 meters</div>
+                    <div class="site-description">
+                        Harbor (or Stingray Point) is located on the eastern coast of Gili Trawangan, featuring a sloping reef combined with a muck-diving environment. The site is characterized by an array of artificial Biorock structures that attract a dense population of macro life, including seahorses, rare mandarinfish at dusk, and octopuses. Its easy topography makes it a highly accessible and popular choice for night diving.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 12 -->
+            <div class="site-card">
+                <span class="site-number">12.</span> <span class="site-name">Secret Reef</span>
+                <div class="site-details">
+                    <div class="site-depth">12 – 35 meters</div>
+                    <div class="site-description">
+                        Secret Reef (also known as Mirko's or Soraya Reef) is an exhilarating drift dive situated in the channel between Gili Meno and Gili Air. The reef top starts flat at 12-14m and steps down in distinct coral terraces into the deep blue at 35m. Fueled by channel currents, the site is rich with table corals, gorgonian fans, and schools of snappers. Due to depth and current, it is primarily recommended for advanced divers.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 13 -->
+            <div class="site-card">
+                <span class="site-number">13.</span> <span class="site-name">Good Heart Reef</span>
+                <div class="site-details">
+                    <div class="site-depth">5 – 25 meters</div>
+                    <div class="site-description">
+                        Good Heart Reef sits on the northeast side of Gili Trawangan, providing a gently sloping sandy terrain dotted with beautiful coral bommies, soft corals, and sponges. Its exceptionally calm conditions and forgiving topography make it an ideal site for beginner divers and certification courses. The coral blocks host a dense population of anemonefish, angelfish, garden eels, and frequent green and hawksbill sea turtles.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 14 -->
+            <div class="site-card">
+                <span class="site-number">14.</span> <span class="site-name">Taket Malang</span>
+                <div class="site-details">
+                    <div class="site-depth">20 – 40 meters</div>
+                    <div class="site-description">
+                        Taket Malang (or Takat Malang) is a deep, advanced dive site located northeast of Gili Meno in open water. It is characterized by dramatic sea mounds (takats) and canyons extending down to 40 meters. Due to its depth and the strong ocean currents sweeping the area, the coral formations are pristine and largely untouched. It attracts large pelagic species and requires advanced certification; Nitrox is highly recommended.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 15 -->
+            <div class="site-card">
+                <span class="site-number">15.</span> <span class="site-name">Air Wall</span>
+                <div class="site-details">
+                    <div class="site-depth">8 – 30 meters</div>
+                    <div class="site-description">
+                        Air Wall lies on the western coast of Gili Air and provides one of the best steep wall dives in the archipelago. The reef starts as a gentle slope before plummeting vertically down to 30 meters. The steep drop is adorned with sea whips, gorgonian fans, and soft corals that harbor incredible macro life, including pygmy seahorses, ghost pipefish, painted lobsters, and colorful nudibranchs. Strong currents make it an excellent drift dive.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 16 -->
+            <div class="site-card">
+                <span class="site-number">16.</span> <span class="site-name">Bongkas Air</span>
+                <div class="site-details">
+                    <div class="site-depth">10 – 25 meters</div>
+                    <div class="site-description">
+                        Bongkas Air is located along the expansive reef system of Gili Air. The site consists of a sloping reef interspersed with fragmented coral blocks and bommies. Operating primarily as a drift dive between 10 and 25 meters, it hosts a variety of benthic predators such as crocodilefish and scorpionfish, while passing schools of trevally hunt in the water column above. Suitable for most certification levels.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 17 -->
+            <div class="site-card">
+                <span class="site-number">17.</span> <span class="site-name">Simone Reef</span>
+                <div class="site-details">
+                    <div class="site-depth">14 – 40 meters</div>
+                    <div class="site-description">
+                        Simone Reef (Simon's Reef) is a spectacular deep-water drift dive north of Gili Meno. The underwater landscape consists of a series of dramatic seamounts arranged in a figure-eight pattern, rising from a 40m sandy floor. Separated by sandy corridors rich in giant barrel sponges and gorgonian fans, the site is known for eagle ray sightings, pygmy seahorses, and pristine hard corals. It is limited to advanced divers.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 18 -->
+            <div class="site-card">
+                <span class="site-number">18.</span> <span class="site-name">Bongkas Meno</span>
+                <div class="site-details">
+                    <div class="site-depth">10 – 25 meters</div>
+                    <div class="site-description">
+                        Bongkas Meno features an irregular, sloping terrain along the Gili Meno reef system. Ranging from 10 to 25 meters in depth, the site consists of scattered coral blocks and rubble that form intricate underwater mazes. Nourished by steady channel currents, it is a prime habitat for foraging hawksbill turtles, giant moray eels, and diverse reef fish hiding within the rocky structures.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 19 -->
+            <div class="site-card">
+                <span class="site-number">19.</span> <span class="site-name">Meno Slope</span>
+                <div class="site-details">
+                    <div class="site-depth">5 – 30 meters</div>
+                    <div class="site-description">
+                        Meno Slope, on the west coast of Gili Meno, is a gradual sandy slope dotted with coral outcrops. It famously hosts 'The Nest,' a striking underwater art installation of 48 life-size human sculptures acting as an artificial reef and coral regeneration project. Beyond the shallow sculptures, the slope descends to 30 meters, offering reliable turtle sightings and gentle drift diving for all levels.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 20 -->
+            <div class="site-card">
+                <span class="site-number">20.</span> <span class="site-name">Biorock</span>
+                <div class="site-details">
+                    <div class="site-depth">4 – 25 meters</div>
+                    <div class="site-description">
+                        The Biorock site on the eastern coast of Gili Trawangan represents the second largest electrical coral restoration project in the world. Steel frames hooked to a low-voltage electrical current stimulate coral growth up to 8 times faster than normal. Ranging from 4 to 25 meters, these resilient structures act as a bustling nursery for macro marine life, juvenile reef fish, pipefish, and green turtles.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site 21 -->
+            <div class="site-card">
+                <span class="site-number">21.</span> <span class="site-name">Glen Nusa</span>
+                <div class="site-details">
+                    <div class="site-depth">21 – 30 meters</div>
+                    <div class="site-description">
+                        Glen Nusa is a 22-meter tugboat intentionally sunk in 2016 to create an artificial reef at the northern edge of Shark Point off Gili Trawangan. Resting on a flat sandy bottom with its base at 30 meters and the top at 21 meters, the wreck is exposed to potentially strong ocean currents. Reserved for advanced divers, it has already been claimed by giant moray eels, eagle rays, and reef sharks.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. About Us (Perkelta žemyn) -->
+    <section id="about" class="edge-section section-about">
+        <div class="intro-text">
+            <h2>ABOUT US</h2>
+            <p>Located in the heart of the idyllic Gili Islands, Master Scuba Diver Resort on Gili Air offers world-class diving experiences for adventurers of all levels. Our dive sites are home to vibrant coral gardens, abundant marine life, and most famously—sea turtles. Dive alongside these gentle giants in their natural habitat, a daily highlight for many of our guests. With experienced PADI instructors, small group sizes, and a strong focus on safety and environmental awareness, we provide personalized dive adventures that are as enriching as they are unforgettable.</p>
         </div>
     </section>
 
     <!-- 6. Footer / Kontaktai -->
-    <section class="edge-section section-contact">
+    <section id="contact" class="edge-section section-contact">
         <h2>Get in Touch</h2>
         
         <div class="social-icons">
-            <a href="https://www.facebook.com/Masterscubacenter" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/masterscubadiveresort/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/Masterscubacenter" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/masterscubadiveresort/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="https://www.tiktok.com/@master.scuba.diveresort" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-            <a href="https://wa.me/6282144567600" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://wa.me/6282144567600" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
         
         <div class="contact-info">
@@ -566,9 +1007,9 @@
         </div>
     </section>
 
-    <!-- 7. Modalinis langas (automatiškai užpildomas paspaudus ant kvadrato) -->
+    <!-- 7. Modalinis langas paslaugoms (Services) -->
     <div class="modal-overlay" id="serviceModal" aria-hidden="true">
-        <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-container" role="dialog" aria-modal="true">
             <button class="modal-close" id="modalCloseBtn" aria-label="Close modal">
                 <i class="fas fa-times"></i>
             </button>
@@ -578,67 +1019,153 @@
                 <h3 class="modal-title" id="modalTitle"></h3>
                 <div class="modal-body" id="modalBody"></div>
                 <a href="https://wa.me/6282144567600" target="_blank" class="modal-cta" id="modalWhatsappBtn">
-                    <i class="fab fa-whatsapp"></i> Book / Inquire via WhatsApp
+                    <i class="fab fa-whatsapp"></i> Inquire via WhatsApp
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript modalo valdymui -->
+    <!-- 8. NAUJAS: Modalinis langas nardymo vietoms (Dive Sites) -->
+    <div class="modal-overlay" id="siteModal" aria-hidden="true">
+        <div class="modal-container" role="dialog" aria-modal="true">
+            <button class="modal-close" id="siteModalCloseBtn" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <!-- Naudosime bendrą gražią nuotrauką sites modalui -->
+            <div class="modal-header-img" id="siteModalImg"></div>
+            <div class="modal-content">
+                <span class="modal-badge">Dive Site</span>
+                <h3 class="modal-title" id="siteModalTitle"></h3>
+                
+                <div class="site-depth-info">
+                    <i class="fas fa-arrows-alt-v"></i> <span id="siteModalDepth"></span>
+                </div>
+
+                <div class="modal-body" id="siteModalBody"></div>
+                
+                <a href="https://wa.me/6282144567600" target="_blank" class="modal-cta" id="siteModalWhatsappBtn">
+                    <i class="fab fa-whatsapp"></i> Book a Dive Here
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Modalui ir Meniu -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('serviceModal');
-            const modalImg = document.getElementById('modalImg');
-            const modalBadge = document.getElementById('modalBadge');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalBody = document.getElementById('modalBody');
-            const modalWhatsappBtn = document.getElementById('modalWhatsappBtn');
-            const closeBtn = document.getElementById('modalCloseBtn');
-            const squares = document.querySelectorAll('.service-square');
+            // -- Mobilus Meniu (Hamburger) --
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const mainNav = document.getElementById('mainNav');
+            
+            menuBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+            });
+            mainNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mainNav.classList.remove('active');
+                });
+            });
 
-            squares.forEach(square => {
-                square.addEventListener('click', () => {
-                    const title = square.querySelector('.service-title h3').textContent.trim();
-                    const subtitle = square.querySelector('.service-title span').textContent.trim();
-                    const descriptionHTML = square.querySelector('.service-description').innerHTML;
-                    const bgImage = square.style.backgroundImage;
+            // ==========================================
+            // SERVICES MODAL
+            // ==========================================
+            const serviceModal = document.getElementById('serviceModal');
+            const sModalImg = document.getElementById('modalImg');
+            const sModalBadge = document.getElementById('modalBadge');
+            const sModalTitle = document.getElementById('modalTitle');
+            const sModalBody = document.getElementById('modalBody');
+            const sModalWhatsappBtn = document.getElementById('modalWhatsappBtn');
+            const sCloseBtn = document.getElementById('modalCloseBtn');
+            
+            const galleryItems = document.querySelectorAll('.gallery-item');
 
-                    modalTitle.textContent = title;
-                    modalBadge.textContent = subtitle;
-                    modalBody.innerHTML = descriptionHTML;
-                    modalImg.style.backgroundImage = bgImage;
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const title = item.querySelector('h3').textContent.trim();
+                    const price = item.querySelector('.gallery-price').textContent.trim();
+                    const descriptionHTML = item.querySelector('.service-description').innerHTML;
+                    const bgImage = item.style.backgroundImage;
 
-                    // Automatiškai suformuoja WhatsApp žinutę su pasirinkto kurso pavadinimu
-                    const encodedMsg = encodeURIComponent(`Hello! I would like to inquire about the ${title}.`);
-                    modalWhatsappBtn.href = `https://wa.me/6282144567600?text=${encodedMsg}`;
+                    sModalTitle.textContent = title;
+                    sModalBadge.textContent = price;
+                    sModalBody.innerHTML = descriptionHTML;
+                    sModalImg.style.backgroundImage = bgImage;
 
-                    modal.classList.add('active');
-                    modal.setAttribute('aria-hidden', 'false');
+                    const encodedMsg = encodeURIComponent(`Hello! I would like to inquire about: ${title} (${price}).`);
+                    sModalWhatsappBtn.href = `https://wa.me/6282144567600?text=${encodedMsg}`;
+
+                    serviceModal.classList.add('active');
+                    serviceModal.setAttribute('aria-hidden', 'false');
                     document.body.style.overflow = 'hidden';
                 });
             });
 
-            const closeModal = () => {
-                modal.classList.remove('active');
-                modal.setAttribute('aria-hidden', 'true');
+            sCloseBtn.addEventListener('click', () => {
+                serviceModal.classList.remove('active');
+                serviceModal.setAttribute('aria-hidden', 'true');
                 document.body.style.overflow = '';
-            };
+            });
 
-            closeBtn.addEventListener('click', closeModal);
+            // ==========================================
+            // DIVE SITES MODAL (NAUJAS)
+            // ==========================================
+            const siteModal = document.getElementById('siteModal');
+            const siteModalTitle = document.getElementById('siteModalTitle');
+            const siteModalDepth = document.getElementById('siteModalDepth');
+            const siteModalBody = document.getElementById('siteModalBody');
+            const siteModalWhatsappBtn = document.getElementById('siteModalWhatsappBtn');
+            const siteCloseBtn = document.getElementById('siteModalCloseBtn');
+            
+            const siteCards = document.querySelectorAll('.site-card');
 
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
+            siteCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Ištraukiame pavadinimą be numerio
+                    const name = card.querySelector('.site-name').textContent.trim();
+                    
+                    // Ištraukiame paslėptus duomenis
+                    const depth = card.querySelector('.site-depth').textContent.trim();
+                    const descriptionHTML = card.querySelector('.site-description').innerHTML;
+
+                    siteModalTitle.textContent = name;
+                    siteModalDepth.textContent = depth;
+                    siteModalBody.innerHTML = descriptionHTML;
+
+                    const encodedMsg = encodeURIComponent(`Hello! I am interested in diving at ${name}.`);
+                    siteModalWhatsappBtn.href = `https://wa.me/6282144567600?text=${encodedMsg}`;
+
+                    siteModal.classList.add('active');
+                    siteModal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            siteCloseBtn.addEventListener('click', () => {
+                siteModal.classList.remove('active');
+                siteModal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            });
+
+            // -- Bendras modalų uždarymas paspaudus fone arba ESC --
+            document.addEventListener('click', (e) => {
+                if (e.target === serviceModal) {
+                    serviceModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+                if (e.target === siteModal) {
+                    siteModal.classList.remove('active');
+                    document.body.style.overflow = '';
                 }
             });
 
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
+                if (e.key === 'Escape') {
+                    serviceModal.classList.remove('active');
+                    siteModal.classList.remove('active');
+                    document.body.style.overflow = '';
                 }
             });
         });
     </script>
-
 </body>
 </html>
